@@ -1,0 +1,27 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.tags{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    top: 0.5rem;
+    overflow: scroll;
+}
+
+@media only screen and (min-width: 400px) {
+    .tags {
+        justify-content: center;
+    }
+}
