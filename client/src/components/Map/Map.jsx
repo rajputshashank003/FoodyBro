@@ -6,7 +6,7 @@ import {
   TileLayer,
   Marker,
   Popup,
-  useMapEvents,
+  useMapEvents, // get click , locationFind , etc events
 } from 'react-leaflet';
 import { toast } from 'react-toastify';
 import * as L from 'leaflet';

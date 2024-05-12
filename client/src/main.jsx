@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from 'react-router-dom'
 import CartProvider from './components/Hooks/useCart.jsx'
 import { LoadingProvider } from './components/Hooks/useLoading.jsx';
+import "./components/Interceptors/AuthInterceptor.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

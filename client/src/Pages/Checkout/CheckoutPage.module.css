@@ -12,22 +12,20 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 400;
     font-size: 1.5rem;
+    padding-left:2.5% ;
 }
 
 .map {
     padding-top: 0%;
     margin: 0px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .orderItems {
     display: flex;
     flex-direction: column;
-}
-.map {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: wrap;
 }
 
 .mapBox {
@@ -41,6 +39,7 @@
     justify-content: center;
     align-items: center;
 }
+
 
 .confirm a {
     padding: 1rem;
@@ -66,5 +65,10 @@
     }
     .orderForm {
         width: 20rem;
+    }
+    .confirm {
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 3%;
     }
 }

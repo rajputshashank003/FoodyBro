@@ -3,17 +3,34 @@ import classes from "./CheckoutPage.module.css";
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { useCart } from '../../components/Hooks/useCart.jsx';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import OrderItemsList from "../../components/OrderItemsList/OrderItemsList.jsx";
 import Map from '../../components/Map/Map.jsx';
+import {useAuth} from "../../components/Hooks/useAuth.jsx";
+import { toast } from "react-toastify";
+import { createOrder } from "../../Services/orderService.js";
 
 function CheckoutPage() {
-    const {cart , removeFromCart , changeQuantity} = useCart();
+    const {cart } = useCart();
+    const {user} = useAuth();
+    const navigate = useNavigate();
+
     const [order, setOrder] = useState({ ...cart });
-    const [address, setAddress] = useState();
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if(!order.addressLatLng){
+            toast.warning("Please select your location on map");
+            return ;
+        }
+        const data = e.target;
+        console.log(data.phone.value, "data phone value");
+        await createOrder({...order, name : data.name.value , address : data.address.value, phone : data.phone.value});
+        navigate("/payment");
+    }
 
     return (
-        <div className={classes.main} >
+        <form onSubmit={submit} className={classes.main}>    
             <div className={classes.orderForm}>
                 <span className={classes.mapHead}>Order Form</span>
                 <br/>
@@ -42,7 +59,6 @@ function CheckoutPage() {
                 label="Address"
                 type='text'
                 variant="outlined"
-                value={address}
                 required
                 />
                 <br/>
@@ -58,25 +74,15 @@ function CheckoutPage() {
                     onChange={latlng => {
                     console.log(latlng);
                     setOrder({ ...cart, addressLatLng: latlng });
-                    setAddress(latlng);
                     }}
                 />
                 </div>
             </div>
             
             <div className={classes.confirm}>
-                <Link 
-                style={{
-                    textDecoration: "none",
-                    position:"relative",
-                    padding:"0.5rem",
-                    margin:"1rem",
-                }}
-                    to="/checkout">
-                    Proceed To Checkout
-                </Link>
+                <Button type="submit" variant='contained' sx={{bgcolor:"#d32f2f", width:"18rem", height:"3.5rem"}} >Go To Payment</Button>
             </div>
-        </div>
+        </form>
     );
 }
 
