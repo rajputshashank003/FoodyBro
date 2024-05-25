@@ -11,6 +11,12 @@ import PaymentPage from './Pages/Payment/PaymentPage.jsx';
 import OrderTrack from './Pages/OrderTrack/OrderTrack.jsx';
 import ProfilePage from './Pages/Profile/ProfilePage.jsx';
 import OrdersPage from './Pages/Orders/OrdersPage.jsx';
+import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
+import UserEditPage from './Pages/UserEdit/UserEditPage.jsx';
+import UsersPage from './Pages/UsersPage/UsersPage.jsx';
+import FoodEditPage from './Pages/FoodEdit/FoodEditPage.jsx';
+import FoodsAdminPage from './Pages/FoodsAdmin/FoodsAdminPage.jsx';
+import AdminRoute from './components/AdminRoute/AdminRoute.jsx';
 
 export default function AppRoutes() {
   return (
@@ -57,6 +63,55 @@ export default function AppRoutes() {
             </AuthRoute>
           } 
         />
+        <Route path="/dashboard" 
+          element={
+            <AuthRoute>
+              <Dashboard />
+            </AuthRoute>
+          } 
+        />
+        <Route
+          path="/admin/foods/:searchTerm?"
+        element={
+          <AdminRoute>
+            <FoodsAdminPage/>
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/addFood"
+        element={
+          <AdminRoute>
+            <FoodEditPage/>
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/editFood/:foodId"
+        element={
+          <AdminRoute>
+            <FoodEditPage/>
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/users/:searchTerm?"
+        element={
+          <AdminRoute>
+            <UsersPage/>
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/editUser/:userId"
+        element={
+          <AdminRoute>
+            <UserEditPage/>
+          </AdminRoute>
+        }
+      />
     </Routes>
   )
 }

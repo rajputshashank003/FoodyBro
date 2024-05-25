@@ -27,6 +27,27 @@ export const updateProfile = async (user) => {
     return data;
 }
 
+export const getAll = async searchTerm => {
+    const { data } = await axios.get('/api/users/getAll/' + (searchTerm ?? ''));
+    return data;
+};
+
 export const changePassword = async (passData) => {
     await axios.put("/api/users/changePassword", passData);
 }
+
+export const toggleBlock = async userId => {
+    const { data } = await axios.put('/api/users/toggleBlock/' + userId);
+    return data;
+  };
+  
+  export const getById = async userId => {
+    const { data } = await axios.get('/api/users/getById/' + userId);
+    return data;
+  };
+  
+  export const updateUser = async userData => {
+    const { data } = await axios.put('/api/users/update', userData);
+    return data;
+  };
+  

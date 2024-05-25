@@ -7,13 +7,13 @@ import cors from "cors";
 import foodRouter from "./routers/food.router.js";
 import userRouter from "./routers/user.router.js";
 import orderRouter from "./routers/order.router.js";
+import uploadRouter from "./routers/upload.router.js";
 import { dbConnect } from "./config/database.config.js";
 import { dirname } from "path";
 import path from "path";
 
 dbConnect();
 
-const port = 8080
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,6 +24,7 @@ app.use(cors({credentials: true , origin: '*'}));
 app.use("/api/foods", foodRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use('/api/upload', uploadRouter);
 
 const publicFolder = path.join(__dirname, "public");
 app.use(express.static(publicFolder));
@@ -31,6 +32,8 @@ app.get("*", (req, res) => {
     const indexFilePath = path.join(publicFolder, "index.html");
     res.sendFile(indexFilePath);
 });
+
+const port = 8080
 
 app.listen(port , () => {
     console.log("Server Connected... !");

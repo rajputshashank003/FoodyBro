@@ -5,6 +5,7 @@ import handler from "express-async-handler";
 import { userModel } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import auth from "../middleware/Auth.mid.js";
+import admin from "../middleware/admin.mid.js";
 
 const router = Router();
 
@@ -72,6 +73,67 @@ router.put("/changePassword" ,
         res.send();
     })
 )
+
+
+router.get(
+    '/getall/:searchTerm?',
+    admin,
+    handler(async (req, res) => {
+      const { searchTerm } = req.params;
+  
+      const filter = searchTerm
+        ? { name: { $regex: new RegExp(searchTerm, 'i') } }
+        : {};
+  
+      const users = await userModel.find(filter, { password: 0 });
+      res.send(users);
+    })
+  );
+  
+  router.put(
+    '/toggleBlock/:userId',
+    admin,
+    handler(async (req, res) => {
+      const { userId } = req.params;
+  
+      if (userId === req.user.id) {
+        res.status(BAD_REQUEST).send("Can't block yourself!");
+        return;
+      }
+  
+      const user = await userModel.findById(userId);
+      user.isBlocked = !user.isBlocked;
+      user.save();
+  
+      res.send(user.isBlocked);
+    })
+  );
+  
+  router.get(
+    '/getById/:userId',
+    admin,
+    handler(async (req, res) => {
+      const { userId } = req.params;
+      const user = await userModel.findById(userId, { password: 0 });
+      res.send(user);
+    })
+  );
+  
+  router.put(
+    '/update',
+    admin,
+    handler(async (req, res) => {
+      const { id, name, email, address, isAdmin } = req.body;
+      await userModel.findByIdAndUpdate(id, {
+        name,
+        email,
+        address,
+        isAdmin,
+      });
+  
+      res.send();
+    })
+  );
 const generateTokenResponse = user => {
     const token = jwt.sign({
         id:user.id, email: user.email, isAdmin : user.isAdmin, 

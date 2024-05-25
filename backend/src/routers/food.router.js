@@ -4,6 +4,7 @@ import {SearchHistory} from "../models/searchHistory.model.js";
 import mongoose from "mongoose";
 import { foodModel } from "../models/food.model.js";
 import handler from "express-async-handler";
+import admin from '../middleware/admin.mid.js';
 
 const router = Router();
 
@@ -12,6 +13,62 @@ router.get("/",
     const result = await foodModel.find({});
     res.send(result);
 }));
+
+router.post(
+  '/',
+  admin,
+  handler(async (req, res) => {
+    const { name, price, tags, favorite, imageUrl, origins, cookTime } =
+      req.body;
+    const food = new foodModel({
+      name,
+      price,
+      tags: tags.split ? tags.split(',') : tags,
+      favorite,
+      imageUrl,
+      origins: origins.split ? origins.split(',') : origins,
+      cookTime,
+    });
+
+    await food.save();
+
+    res.send(food);
+  })
+);
+
+
+router.put(
+  '/',
+  admin,
+  handler(async (req, res) => {
+    const { id, name, price, tags, favorite, imageUrl, origins, cookTime } =
+      req.body;
+
+    await foodModel.updateOne(
+      { _id: id },
+      {
+        name,
+        price,
+        tags: tags.split ? tags.split(',') : tags,
+        favorite,
+        imageUrl,
+        origins: origins.split ? origins.split(',') : origins,
+        cookTime,
+      }
+    );
+
+    res.send();
+  })
+);
+router.delete(
+  '/:foodId',
+  admin,
+  handler(async (req, res) => {
+    const { foodId } = req.params;
+    await foodModel.deleteOne({ _id: foodId });
+    res.send();
+  })
+);
 
 router.get("/search/:searchTerm", handler ( async (req,res) => {
     const searchTerm = req.params.searchTerm;
