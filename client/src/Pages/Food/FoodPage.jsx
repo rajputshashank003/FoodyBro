@@ -25,7 +25,7 @@ export default function FoodPage() {
   useEffect( () => {
     async function find(){
       const res = await foodById(id);
-      setFood(res.data);  
+      setFood(res);  
     }
     find();
   }, []);
@@ -36,7 +36,8 @@ export default function FoodPage() {
       currency: 'INR', 
     }).format(food.price) 
     : null ;
-
+  
+  console.log("inside ", food);
   return (
     <>
     {food ? 

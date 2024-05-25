@@ -1,7 +1,7 @@
 import React from 'react'
 import HomePage from './Pages/Home/HomePage'
 import {Routes , Route} from "react-router-dom";
-import FoodPage from './Pages/Food/FoodPage';
+import FoodPage from './Pages/Food/FoodPage.jsx';
 import CartPage from './Pages/Cart/CartPage';
 import Login from './Pages/Login/Login';
 import RegisterPage from './Pages/Register/RegisterPage';
