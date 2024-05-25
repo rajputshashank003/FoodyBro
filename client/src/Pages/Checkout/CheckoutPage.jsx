@@ -24,7 +24,6 @@ function CheckoutPage() {
             return ;
         }
         const data = e.target;
-        console.log(data.phone.value, "data phone value");
         await createOrder({...order, name : data.name.value , address : data.address.value, phone : data.phone.value});
         navigate("/payment");
     }

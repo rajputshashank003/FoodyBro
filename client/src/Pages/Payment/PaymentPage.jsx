@@ -21,7 +21,6 @@ export default function PaymentPage() {
   const handleApprove = async () => {
     try {
       const orderId = await pay("12345");
-      console.log(orderId, "inside payment page --");
       clearCart();
       toast.success("order generated");
       navigate("/track/" + orderId);

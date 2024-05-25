@@ -1,6 +1,7 @@
 import {Router} from "express";
 import { sample_foods, sample_tags } from "../data.js";
-
+import {SearchHistory} from "../models/searchHistory.model.js";
+import mongoose from "mongoose";
 import { foodModel } from "../models/food.model.js";
 import handler from "express-async-handler";
 
@@ -18,6 +19,50 @@ router.get("/search/:searchTerm", handler ( async (req,res) => {
     const foods = await foodModel.find({name : {$regex : searchRegex }});
     res.send(foods);
 }));
+
+router.post('/saveSearch', async (req, res) => {
+  const { id, term } = req.body;
+  const newSearch = new SearchHistory({ userId: id, searchTerm: term });
+  try {
+    const searchCount = await SearchHistory.countDocuments({ userId: id });
+    if (searchCount >= 5) {
+      const oldestSearch = await SearchHistory.findOneAndDelete({ userId: id }, { sort: { timestamp: 1 } });
+    }
+    await newSearch.save();
+    res.status(201).json({ message: 'Search saved' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving search' });
+  }
+});
+
+
+const getRecommendations = async (userId) => {
+  try {
+    const searches = await SearchHistory.aggregate([
+      { $match: { userId: new mongoose.Types.ObjectId(userId) } },
+      { $group: { _id: '$searchTerm', count: { $sum: 1 }, lastSearchedAt: { $last: '$timestamp' } } },
+      { $sort: { lastSearchedAt: -1, count: -1 } }, // Sort by last searched time and then by count
+      { $limit: 4 }
+    ]);
+    const recommendedItems = searches.map(search => search._id);
+    return recommendedItems;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+  
+  router.get('/recommendations/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const recommendations = await getRecommendations(userId);
+      res.status(200).json(recommendations);
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching recommendations' });
+    }
+  });
+
+
 
 
 router.get("/tags", handler (async (req, res) => {

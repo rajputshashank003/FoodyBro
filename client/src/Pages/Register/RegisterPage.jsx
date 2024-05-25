@@ -15,7 +15,8 @@ export default function RegisterPage() {
         email: '',
         password: '',
         confirmPassword: '',
-        address: ''
+        address: '',
+        phone : 0,
       });
 
       const [error, setError] = useState({isError : false , error : ""});
@@ -80,6 +81,17 @@ export default function RegisterPage() {
               variant="standard"
               required
               value={formData.email}
+              onChange={handleChange}
+            />
+            <br />
+            <TextField
+              sx={{ height: "5rem", width: "15rem" }}
+              name='phone'
+              label="Phone no."
+              type='number'
+              variant="standard"
+              required
+              value={formData.phone}
               onChange={handleChange}
             />
             <br />

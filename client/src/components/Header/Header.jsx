@@ -65,6 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+import axios from 'axios';
 
 export default function PrimarySearchAppBar() {
 // userDefined Functions 
@@ -79,6 +80,11 @@ export default function PrimarySearchAppBar() {
   }, [searchTerm]);
 
   const search = async () => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if(userData.id){
+      const id = userData.id;
+      const result = await axios.post("/api/foods/saveSearch", {id , term});
+    }
     term ? navigate("/search/" + term) : navigate("/");
   };
 
@@ -221,14 +227,14 @@ export default function PrimarySearchAppBar() {
           </IconButton>
 
           <Search sx={{
-                '@media only screen and (max-width: 350px)': {
+                '@media only screen and (max-width: 600px)': {
                   padding: "0px",
                   margin:"0px"
                 }
               }}>
             <SearchIconWrapper>
               <SearchIcon sx={{
-                '@media only screen and (max-width: 350px)': {
+                '@media only screen and (max-width: 600px)': {
                   fontSize: '1rem', 
                 }
                 }} 
@@ -242,7 +248,11 @@ export default function PrimarySearchAppBar() {
               onKeyUp={e => e.key === 'Enter' && search()}
               value={term}
               sx={{
-                '@media only screen and (max-width: 350px)': {
+                width:"35rem",
+                '@media only screen and (max-width: 800px)': {
+                  width: '25rem', 
+                },
+                '@media only screen and (max-width: 600px)': {
                   width: '11rem', 
                   padding: "0px",
                   margin:"0px"

@@ -3,6 +3,7 @@ import handler from "express-async-handler";
 import auth from "../middleware/Auth.mid.js";
 import { orderModel } from "../models/order.model.js";
 import { OrderStatus } from "../constants/orderStatus.js";
+import { userModel } from "../models/user.model.js";
 
 const router = Router();
 
@@ -45,6 +46,45 @@ router.get (
         const order = await orderModel.findOne({user : req.user.id , status: OrderStatus.NEW}).populate("user");
         if(order) return res.send(order);
         return res.status(400).send();
+    })
+);
+
+router.get(
+    "/track/:orderId",
+    handler (async (req, res) => {
+        const { orderId } = req.params;
+        const user = await userModel.findById(req.user.id);
+        const filter = {
+            _id: orderId,
+        };
+
+        if (!user.isAdmin) {
+        filter.user = user._id;
+        }
+
+        const order = await orderModel.findOne(filter);
+
+        if(!order) return res.status(401).send("401");
+        res.send(order);
+    })
+);
+
+router.get("/allstatus", 
+    handler (async (req, res) => {
+        const allOrders = Object.values(OrderStatus);
+        res.send(allOrders);
+    })
+)
+
+router.get("/:status?",
+    handler( async (req, res) => {
+        const status = req.params.status;
+        const user = await userModel.findById(req.user.id);
+        const filter = {};
+        if(!user.isAdmin) filter.user = user._id;
+        if(status) filter.status = status;
+        const orders = await orderModel.find(filter).sort("-createdAt");
+        res.send(orders);
     })
 );
 
