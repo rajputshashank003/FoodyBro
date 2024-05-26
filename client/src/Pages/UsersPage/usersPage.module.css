@@ -31,3 +31,31 @@ h3 {
   display: flex;
   gap: 0.7rem;
 }
+
+.list_item2{
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.link_button {
+  background-color: green;
+  color: white;
+  padding: 2%;
+  border-radius: 0.2rem;
+}
+@media only screen and (max-width: 600px) {
+  .list_item {
+    display: none;
+  }
+  .list_item2{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .list_item2 li {
+    padding: 2%;
+    margin: 1%;
+  }
+}

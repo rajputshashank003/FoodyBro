@@ -40,6 +40,7 @@ function CheckoutPage() {
                 label="Name"
                 type='text'
                 variant="outlined"
+                defaultValue={user.name}
                 required
                 />
                 <br/>
@@ -49,6 +50,7 @@ function CheckoutPage() {
                 label="Phone"
                 type='number'
                 variant="outlined"
+                defaultValue={user.phone}
                 required
                 />
                 <br/>
@@ -58,6 +60,7 @@ function CheckoutPage() {
                 label="Address"
                 type='text'
                 variant="outlined"
+                defaultValue={user.address}
                 required
                 />
                 <br/>

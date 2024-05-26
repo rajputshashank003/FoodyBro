@@ -10,6 +10,7 @@ export default function UsersPage() {
   const [users, setUsers] = useState();
   const { searchTerm } = useParams();
   const auth = useAuth();
+  const currUser = useAuth().user;
 
   useEffect(() => {
     loadUsers();
@@ -27,7 +28,7 @@ export default function UsersPage() {
       oldUsers.map(user => (user.id === userId ? { ...user, isBlocked } : user))
     );
   };
-
+  console.log(users);
   return (
     <div className={classes.container}>
       <div className={classes.list}>
@@ -36,7 +37,7 @@ export default function UsersPage() {
           searchRoute="/admin/users/"
           defaultRoute="/admin/users"
           placeholder="Search Users"
-          margin="1rem 0"
+          margin="0rem 0"
         />
         <div className={classes.list_item}>
           <h3>Name</h3>
@@ -45,7 +46,7 @@ export default function UsersPage() {
           <h3>Admin</h3>
           <h3>Actions</h3>
         </div>
-        {users &&
+        {users && 
           users.map(user => (
             <div key={user.id} className={classes.list_item}>
               <span>{user.name}</span>
@@ -53,15 +54,42 @@ export default function UsersPage() {
               <span>{user.address}</span>
               <span>{user.isAdmin ? '✅' : '❌'}</span>
               <span className={classes.actions}>
-                <Link to={'/admin/editUser/' + user.id}>Edit</Link>
+                <Link  to={'/admin/editUser/' + user.id}>
+                {user.id == currUser.id ? "Edit your Profile" : "Edit User"} 
+                </Link>
                 {auth.user.id !== user.id && (
-                  <Link onClick={() => handleToggleBlock(user.id)}>
+                  <Link  onClick={() => handleToggleBlock(user.id)}>
                     {user.isBlocked ? 'Unblock' : 'Block'}
                   </Link>
                 )}
               </span>
             </div>
           ))}
+          {users && 
+            <ol className={classes.list_item2}>
+              {users.map(user => (
+                <li key={user.id}>User id : {user.id}
+                  <ul>
+                    <li>NAME : <b>{user.name}</b></li>
+                    <li>EMAIL : {user.email}</li>
+                    <li>PHONE NO. : {user.phone}</li>
+                    <li>ADDRESS : {user.address}</li>
+                    <li>ADMIN : {user.isAdmin ? '✅' : '❌'}</li>
+                    <li className={classes.actions}>
+                      <Link className={classes.link_button} to={'/admin/editUser/' + user.id}>
+                        {user.id == currUser.id ? "Edit your Profile" : "Edit User"} 
+                      </Link>
+                      {auth.user.id !== user.id && (
+                        <Link className={classes.link_button} style={{backgroundColor : "red"}}  onClick={() => handleToggleBlock(user.id)}>
+                          {user.isBlocked ? 'Unblock' : 'Block'}
+                        </Link>
+                      )}
+                    </li>
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          }
       </div>
     </div>
   );

@@ -48,3 +48,35 @@ a.add_food:hover {
   color: darkblue;
   cursor: pointer;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .container {
+    display: flex;
+
+  }
+  .list {
+    width: 100%;
+    padding: 2%;
+  }
+  img {
+    margin: 2%;
+  }
+  .list_item{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 3%;
+    overflow:scroll;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 3%;
+  }
+  a {
+    margin : 3%;
+  }
+}

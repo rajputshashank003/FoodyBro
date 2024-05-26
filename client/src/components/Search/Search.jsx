@@ -26,7 +26,7 @@ export default function Search({
     term ? navigate(searchRoute + term) : navigate(defaultRoute);
   };
   return (
-    <div className={classes.container} style={{ margin }}>
+    <div className={classes.container} >
       <input
         type="text"
         placeholder={placeholder}
