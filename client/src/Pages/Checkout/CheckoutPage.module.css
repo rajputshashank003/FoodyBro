@@ -79,6 +79,9 @@
     .orderItems{
         display: none;
     }
+    .orderItems2{
+        display:contents
+    }
     img {
         width: 70%;
         height: 6rem;
@@ -97,6 +100,9 @@
         font-size: larger;
         padding: 2%;
     }
+    .orderItems2 .name {
+        font-weight: bold;
+    }
     /* Keyframes for fade and slide in from the bottom */
     @keyframes fadeSlideIn {
         0% {
@@ -112,27 +118,9 @@
     /* Apply the animation to the image */
     a img {
         animation: fadeSlideIn 1s ease-out forwards; /* 1s duration, ease-out timing, forwards fill mode */
-        width: 100%; /* Adjust as needed */
+        width: 90%; /* Adjust as needed */
         max-width: 600px; /* Adjust as needed */
     }
-    @keyframes fadeFromBottom {
-        0% {
-            opacity: 0;
-            transform: translateY(50%);
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
     
-    /* Apply the animation to the image */
-    a img {
-        animation: fadeFromBottom 1s ease-out forwards; /* 1s duration, ease-out timing, forwards fill mode */
-        width: 100%; /* Adjust as needed */
-        max-width: 90%; /* Adjust as needed */
-        mask-image: linear-gradient(to top, transparent, black);
-        -webkit-mask-image: linear-gradient(to top, transparent, black); /* For Safari */
-    }
 }
 

@@ -84,14 +84,14 @@ function CheckoutPage() {
                                 <Link to={`/food/${item.food.id}`}>
                                     <img src={item.food.imageUrl} />
                                 <ul>
-                                    <li><span>Name : </span> {item.food.name}</li>
+                                    <li><span className={classes.name}>Name : </span> {item.food.name}</li>
                                     <li>
-                                        <span>Item Price : </span>
+                                        <span className={classes.name}>Item Price : </span>
                                         <Price price={item.food.price} />
                                     </li>
-                                    <li><span>Quantity : </span>{item.quantity}</li>
+                                    <li><span className={classes.name}>Quantity : </span>{item.quantity}</li>
                                     <li>
-                                        <span>Total Price : </span>
+                                        <span className={classes.name}>Total Price : </span>
                                         <Price price={item.price} />
                                     </li>
                                 </ul>
@@ -99,7 +99,7 @@ function CheckoutPage() {
                             </div>
                         ))
                     }
-                    <span>Total Bill : <Price price={totalBill}/></span>
+                    <span className={classes.name} >Total Bill : <Price price={totalBill}/></span>
                     <br/>
                     <br/>
                 </div>
