@@ -9,6 +9,7 @@ import Map from '../../components/Map/Map.jsx';
 import {useAuth} from "../../components/Hooks/useAuth.jsx";
 import { toast } from "react-toastify";
 import { createOrder } from "../../Services/orderService.js";
+import Price from "../../components/Price/Price.jsx";
 
 function CheckoutPage() {
     const {cart } = useCart();
@@ -16,6 +17,7 @@ function CheckoutPage() {
     const navigate = useNavigate();
 
     const [order, setOrder] = useState({ ...cart });
+    const [totalBill , setTotalBill] = useState(0);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -27,6 +29,13 @@ function CheckoutPage() {
         await createOrder({...order, name : data.name.value , address : data.address.value, phone : data.phone.value});
         navigate("/payment");
     }
+    useState( () => {
+        if(order && order.items){
+            order.items.map( (item) => {
+                setTotalBill((prev) => prev + item.price);
+            });
+        }
+    }, [order])
 
     return (
         <form onSubmit={submit} className={classes.main}>    
@@ -66,6 +75,33 @@ function CheckoutPage() {
                 <br/>
                 <div className={classes.orderItems}>
                     <OrderItemsList order={order}/>
+                </div>
+                <div className={classes.orderItems2}>
+                    <h3>Order Items:</h3>
+                    {
+                        order.items.map((item) => (
+                            <div>
+                                <Link to={`/food/${item.food.id}`}>
+                                    <img src={item.food.imageUrl} />
+                                <ul>
+                                    <li><span>Name : </span> {item.food.name}</li>
+                                    <li>
+                                        <span>Item Price : </span>
+                                        <Price price={item.food.price} />
+                                    </li>
+                                    <li><span>Quantity : </span>{item.quantity}</li>
+                                    <li>
+                                        <span>Total Price : </span>
+                                        <Price price={item.price} />
+                                    </li>
+                                </ul>
+                                </Link>
+                            </div>
+                        ))
+                    }
+                    <span>Total Bill : <Price price={totalBill}/></span>
+                    <br/>
+                    <br/>
                 </div>
             </div>
             <div className={classes.map}>
