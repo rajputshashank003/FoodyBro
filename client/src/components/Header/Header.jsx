@@ -81,7 +81,7 @@ export default function PrimarySearchAppBar() {
 
   const search = async () => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    if(userData.id){
+    if(userData && userData.id){
       const id = userData.id;
       const result = await axios.post("/api/foods/saveSearch", {id , term});
     }
