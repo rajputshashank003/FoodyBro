@@ -215,6 +215,7 @@ export default function PrimarySearchAppBar() {
 
 
   return (
+    <div style={{borderRadius:"0.5rem" , overflow:"hidden"}}>
     <Box sx={{ flexGrow: 1}} >
       <AppBar position="static" sx={{bgcolor:"error.main"}}>
         <Toolbar>
@@ -325,5 +326,6 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    </div>
   );
 }
