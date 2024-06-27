@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors({credentials: true , origin: '*'}));
 
 app.get("/", (req,res) => {
-    console.log("api connected!");
+    res.send("api connected!");
 })
 
 app.use("/api/foods", foodRouter);
