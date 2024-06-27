@@ -15,5 +15,8 @@
   "license": "ISC",
   "engines": {
     "node": ">= 18 < 19"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }
