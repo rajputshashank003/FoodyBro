@@ -21,7 +21,7 @@ const __dirname = dirname(__filename);
 app.use(express.json());
 app.use(cors({credentials: true , origin: '*'}));
 
-app.get('/', (req, res)=> {
+app.get('/test/api', (req, res)=> {
     res.send("Api Connected !");
 })
 
