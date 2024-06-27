@@ -33,4 +33,8 @@ app.get("*", (req, res) => {
     res.sendFile(indexFilePath);
 });
 
-export default app;
+const port = 8080
+
+app.listen(port , () => {
+    console.log("Server Connected... !");
+});
