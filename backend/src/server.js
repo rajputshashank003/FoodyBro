@@ -21,8 +21,8 @@ const __dirname = dirname(__filename);
 app.use(express.json());
 app.use(cors({credentials: true , origin: '*'}));
 
-app.get("/", (req,res) => {
-    res.send("api connected!");
+app.get('/', (req, res)=> {
+    res.send("Api Connected !");
 })
 
 app.use("/api/foods", foodRouter);
@@ -30,13 +30,14 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use('/api/upload', uploadRouter);
 
-const publicFolder = path.join(__dirname, "public");
-app.use(express.static(publicFolder));
-app.get("*", (req, res) => {
-    const indexFilePath = path.join(publicFolder, "index.html");
-    res.sendFile(indexFilePath);
-});
-
+if(process.env.MODE === 'production'){
+    const publicFolder = path.join(__dirname, "public");
+    app.use(express.static(publicFolder));
+    app.get("*", (req, res) => {
+        const indexFilePath = path.join(publicFolder, "index.html");
+        res.sendFile(indexFilePath);
+    });
+}
 const port = 8080
 
 app.listen(port , () => {
