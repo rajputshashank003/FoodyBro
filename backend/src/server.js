@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(express.json());
-app.use(cors({credentials: true , origin: '*'}));
+app.use(cors({ origin: '*'}));
 
 app.get('/test/api', (req, res)=> {
     res.send("Api Connected !");
