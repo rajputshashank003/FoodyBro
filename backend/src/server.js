@@ -19,27 +19,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(express.json());
-app.use(cors({ origin: '*'}));
-
-app.get('/test/api', (req, res)=> {
-    res.send("Api Connected !");
-})
+app.use(cors({credentials: true , origin: '*'}));
 
 app.use("/api/foods", foodRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use('/api/upload', uploadRouter);
 
-if(process.env.MODE === 'production'){
-    const publicFolder = path.join(__dirname, "public");
-    app.use(express.static(publicFolder));
-    app.get("*", (req, res) => {
-        const indexFilePath = path.join(publicFolder, "index.html");
-        res.sendFile(indexFilePath);
-    });
-}
+const publicFolder = path.join(__dirname, "public");
+app.use(express.static(publicFolder));
+app.get("*", (req, res) => {
+    const indexFilePath = path.join(publicFolder, "index.html");
+    res.sendFile(indexFilePath);
+});
+
 const port = 8080
 
 app.listen(port , () => {
-    console.log("Server Connected... {8080}!");
+    console.log("Server Connected... !");
 });
