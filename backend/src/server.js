@@ -21,6 +21,10 @@ const __dirname = dirname(__filename);
 app.use(express.json());
 app.use(cors({credentials: true , origin: '*'}));
 
+app.get("/", (req,res) => {
+    console.log("api connected!");
+})
+
 app.use("/api/foods", foodRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
@@ -36,5 +40,5 @@ app.get("*", (req, res) => {
 const port = 8080
 
 app.listen(port , () => {
-    console.log("Server Connected... !");
+    console.log("Server Connected... {8080}!");
 });
