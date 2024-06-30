@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-axios.defaults.baseURL =
+axios.defaults.baseURL = 
   process.env.NODE_ENV !== 'production' ? 'http://localhost:8080' : '/';
