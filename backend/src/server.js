@@ -26,7 +26,7 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use('/api/upload', uploadRouter);
 
-const publicFolder = path.join(__dirname, "public/dist");
+const publicFolder = path.join(__dirname, "public");
 console.log(publicFolder);
 app.use(express.static(publicFolder));
 app.get("*", (req, res) => {
@@ -36,7 +36,7 @@ app.get("*", (req, res) => {
 
 const port = 8080
 
-app.listen(port , () => {
-    console.log("Server Connected... !");
-});
-// export default app;
+// app.listen(port , () => {
+//     console.log("Server Connected... !");
+// });
+export default app;
