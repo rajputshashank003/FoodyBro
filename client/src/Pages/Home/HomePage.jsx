@@ -78,6 +78,7 @@ export default function HomePage() {
           sample_tags && sample_tags.length > 0 &&
           <div className={classes.tags}>
             <Tags tags={sample_tags}/>
+            <h1>texting...</h1>
           </div>
         }
         {
