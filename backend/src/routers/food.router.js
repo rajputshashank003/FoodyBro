@@ -123,6 +123,7 @@ const getRecommendations = async (userId) => {
 
 
 router.get("/tags", handler (async (req, res) => {
+    console.log("calling tags");
     const tags = await foodModel.aggregate([
         {
             $unwind : '$tags' ,

@@ -1,15 +1,21 @@
 import mongoose from "mongoose";
 
-mongoose.set('strictQuery', true);
+let isConnected = false;
+mongoose.set("strictQuery", true);
 
 export const dbConnect = async () => {
-    try {
-        mongoose.connect(process.env.MONGO_URI, {
-            // useNewUrlParser: true , 
-            // useUnifiedTopology : true ,
-        });
-        console.log("database connected !");
-    } catch (err) {
-        console.log(err);
-    }
-}
+  if (isConnected) {
+    console.log("Database already connected.");
+    return;
+  }
+
+  try {
+    console.log("Connecting to database...");
+    await mongoose.connect(process.env.MONGO_URI, {
+    });
+    isConnected = true;
+    console.log("Database connected!");
+  } catch (err) {
+    console.error("Database connection failed!", err);
+  }
+};
