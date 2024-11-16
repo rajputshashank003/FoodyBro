@@ -9,7 +9,7 @@
     "install-backend": "cd backend && npm install",
     "install-client": "cd client && npm install",
     "build": "cd client && npm run build",
-    "postbuild": "mv -f client/dist backend/src/public/",
+    "postbuild": " npm run remove_build && mv -f client/dist backend/src/public/",
     "remove_build" : "rm -rf backend/src/public"
   },
   "author": "",
