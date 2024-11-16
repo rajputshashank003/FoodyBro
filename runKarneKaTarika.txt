@@ -1,4 +1,0 @@
-rm -r public
-or delete public folder in backend
-run npm run build command
-push to git after commits
