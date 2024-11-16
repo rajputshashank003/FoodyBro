@@ -80,6 +80,9 @@ export default function HomePage() {
             <Tags tags={sample_tags}/>
           </div>
         }
+        <h1>
+          hello this is testing
+        </h1>
         {
           (sample_foods && sample_foods.length == 0) ?
             <NotFound message="Reset Search"/>
