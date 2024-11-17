@@ -15,6 +15,7 @@ import Price from '../Price/Price.jsx';
 import { useCart } from '../Hooks/useCart.jsx';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import classes from "./Thumbnail.module.css";
+import { useState } from 'react';
 
 export default function MediaCard({food}) {
     const defaultImage = "/foods/";
@@ -22,7 +23,7 @@ export default function MediaCard({food}) {
     const handleAddToCart = () => {
       addToCart(food);
     }
-
+    const [favoriteFood , setFavouriteFood] = useState(false);
   return (
     <div className={classes.main} >
     <Card sx={{ maxWidth: 345 }}>
@@ -40,8 +41,8 @@ export default function MediaCard({food}) {
               {food.name}
               </Typography>
             </Link>
-            <IconButton aria-label="add to favorites" style={{position:"relative", top:"-0.2rem"}}>
-            <FavoriteIcon sx={{ color:food.favorite ? "red" : "grey"}}/>
+            <IconButton onClick={() => setFavouriteFood((prev) => !prev)} aria-label="add to favorites" style={{position:"relative", top:"-0.2rem"}}>
+            <FavoriteIcon sx={{ color: favoriteFood ? "red" : "grey"}}/>
             </IconButton>
         </span>    
         <Rating name="read-only" value={food.stars} readOnly />

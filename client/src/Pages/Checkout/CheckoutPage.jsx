@@ -110,7 +110,6 @@ function CheckoutPage() {
                 <Map
                     location={order.addressLatLng}
                     onChange={latlng => {
-                    console.log(latlng);
                     setOrder({ ...cart, addressLatLng: latlng });
                     }}
                 />

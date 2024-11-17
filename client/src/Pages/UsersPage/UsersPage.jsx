@@ -28,7 +28,6 @@ export default function UsersPage() {
       oldUsers.map(user => (user.id === userId ? { ...user, isBlocked } : user))
     );
   };
-  console.log(users);
   return (
     <div className={classes.container}>
       <div className={classes.list}>

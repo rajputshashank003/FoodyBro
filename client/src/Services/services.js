@@ -25,7 +25,6 @@ export const searchFood = async (searchTerm) => {
 
 export const foodById = async (id) => {
     const response = await axios.get("/api/foods/" + id);
-    console.log("food" , response.data);
     return response.data;
 }
 

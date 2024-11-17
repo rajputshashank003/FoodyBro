@@ -21,7 +21,7 @@ export default function FoodPage() {
     navigate("/cart");
   }
   const [food, setFood] = useState();
-
+  const [favoriteFood , setFavouriteFood] = useState(false);
   useEffect( () => {
     async function find(){
       const res = await foodById(id);
@@ -37,7 +37,6 @@ export default function FoodPage() {
     }).format(food.price) 
     : null ;
   
-  console.log("inside ", food);
   return (
     <>
     {food ? 
@@ -46,7 +45,7 @@ export default function FoodPage() {
         <span className={classes.span}>
           <h1 className={classes.name_Favourite}>
             {food.name}
-            <FavoriteIcon sx={{ color:food.favorite ? "red" : "grey", position:"relative", top:"0.6rem", fontSize:"2rem"}}/>
+            <FavoriteIcon onClick={() => setFavouriteFood((prev) => !prev)} sx={{ color: favoriteFood ? "red" : "grey", position:"relative", top:"0.6rem", fontSize:"2rem", cursor : 'pointer'}}/>
           </h1>
           <Rating name="read-only" value={food.stars} readOnly />
           <br/>
