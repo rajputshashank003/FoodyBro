@@ -8,6 +8,7 @@ export const userSchema = new mongoose.Schema(
         address : { type : String , required : true},
         phone : {type : Number , required : true},
         isAdmin : { type : Boolean , default : false} ,
+        favourite_food: { type: [String], ref: "food" },
     },
     {
         timestamps : true ,

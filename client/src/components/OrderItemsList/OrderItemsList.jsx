@@ -20,7 +20,7 @@ export default function OrderItemsList({ order }) {
               </Link>
             </td>
             <td>{item.food.name}</td>
-            <td>
+            <td className='price'>
               <Price price={item.food.price} />
             </td>
             <td>{item.quantity}</td>

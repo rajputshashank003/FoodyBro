@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { foodModel } from "../models/food.model.js";
 import handler from "express-async-handler";
 import admin from '../middleware/admin.mid.js';
+import { userModel } from "../models/user.model.js";
 
 const router = Router();
 
@@ -12,6 +13,119 @@ router.get("/",
     handler ( async (req,res) => {
     const result = await foodModel.find({});
     res.send(result);
+}));
+
+router.get("/favourites", handler (async (req, res) => {
+  const {userId , foodId} = req.query;
+  const user = await userModel.findById(userId);
+  let isFavourite = false;
+  if(user.favourite_food){
+    isFavourite = user.favourite_food.includes(foodId);
+  }
+  res.status(200).json({
+    success : true,
+    data : isFavourite
+  })
+}));
+
+router.post("/favourites", handler (async (req, res) => {
+  const {userId , foodId} = req.body;
+  const foodProduct = await userModel.findByIdAndUpdate(
+    {_id : userId},
+    {
+      $push : {
+        favourite_food : foodId
+      }
+    },
+    {new : true}
+  );
+  res.status(200).json({
+    success : true,
+    data : foodProduct
+  })
+}));
+
+router.delete("/favourites", handler (async (req, res) => {
+  const {userId , foodId} = req.query;
+  const foodProduct = await userModel.findByIdAndUpdate(
+    {_id : userId},
+    {
+      $pull : {
+        favourite_food : foodId
+      }
+    },
+    {new : true}
+  );
+  res.status(200).json({
+    success : true,
+    data : foodProduct
+  })
+
+}));
+
+router.post("/review", handler (async (req, res) => {
+  const {id , comment , rating, email} = req.body;
+  const foodProduct = await foodModel.findByIdAndUpdate(
+    {_id : id},
+    {
+      $push : {
+        reviews : {comment , rating, email}
+      }
+    },
+    {new : true}
+  );
+  const updatedFood = await foodModel.findByIdAndUpdate(
+    {_id : id},
+    {
+      $set : {
+        rating : foodProduct.averageRating
+      }
+    },
+    {new : true}
+  );
+  res.status(200).json({
+    success : true,
+    message : "Upload Success",
+    data : updatedFood
+  })
+}));
+
+router.delete("/review", handler (async (req, res) => {
+  const {reviewId , foodId} = req.query;
+  const foodProduct = await foodModel.findByIdAndUpdate(
+    {_id : foodId}, 
+    {
+      $pull : {
+        reviews : {_id : reviewId}
+      }
+    },
+    {new : true}
+  );
+  const updatedFood = await foodModel.findByIdAndUpdate(
+    {_id : foodId},
+    {
+      $set : {
+        rating : foodProduct.averageRating
+      }
+    },
+    {new : true}
+  );
+  res.status(200).json({
+    success : true,
+    message : "Data fetched success",
+    data : updatedFood
+  });
+}));
+
+
+router.get("/reviews/:id", handler (async (req, res) => {
+  const {id} = req.params;
+  const foodProduct = await foodModel.findById({_id : id});
+  res.status(200).json({
+    success : true,
+    message : "Data fetched success",
+    data : foodProduct.reviews
+  });
 }));
 
 router.post(
@@ -92,6 +206,16 @@ router.post('/saveSearch', async (req, res) => {
   }
 });
 
+router.post('/removeSearch', async (req, res) => {
+  const { id, term } = req.body;
+  try {
+    await SearchHistory.findOneAndDelete({usrId : id , searchTerm : term});
+    res.status(201).json({ message: 'Search removed' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error removing search' });
+  }
+});
+
 
 const getRecommendations = async (userId) => {
   try {
@@ -109,21 +233,21 @@ const getRecommendations = async (userId) => {
   }
 };
   
-  router.get('/recommendations/:userId', async (req, res) => {
-    const { userId } = req.params;
-    try {
-      const recommendations = await getRecommendations(userId);
-      res.status(200).json(recommendations);
-    } catch (error) {
-      res.status(500).json({ error: 'Error fetching recommendations' });
-    }
-  });
+router.get('/recommendations/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const recommendations = await getRecommendations(userId);
+    res.status(200).json(recommendations);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching recommendations' });
+  }
+});
 
 
 
 
-router.get("/tags", handler (async (req, res) => {
-    console.log("calling tags");
+router.get("/tags/getAll/:userId", handler (async (req, res) => {
+    const {userId} = req.params;
     const tags = await foodModel.aggregate([
         {
             $unwind : '$tags' ,
@@ -161,14 +285,26 @@ router.get("/tags", handler (async (req, res) => {
         });
     } );
     ans.sort(( ele1, ele2) => ele2.count - ele1.count);
-
+    if(userId && userId !== "-"){
+      const foodIds = (await userModel.findById({_id : userId})).favourite_food ;
+      ans.unshift({name : "favourites" , count : foodIds.length });
+    } else {
+      console.log("user Id is empty");
+    }
     res.send(ans);
 }));
 
 router.get("/tags/:tag",handler( async (req, res) => {
-    const tag = req.params.tag;
+    const {tag} = req.params;
     const foods = await foodModel.find({tags : tag});
     res.send(foods);
+}));
+
+router.get("/tags/favourites/:userId", handler (async (req, res) => {
+  const {userId} = req.params;
+  const foodIds = (await userModel.findById({_id : userId})).favourite_food;
+  const foods = await foodModel.find({ _id: { $in: foodIds } });
+  res.send(foods);
 }));
 
 router.get("/:id",handler( async (req, res) => {

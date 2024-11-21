@@ -5,22 +5,31 @@ export const getAll = async () => {
     return response;
 }
 
-export const getAllTags = async () => {
-    const response =  await axios.get("/api/foods/tags");
+export const getAllTags = async (userId) => {
+    const response =  await axios.get("/api/foods/tags/getAll/" + (userId ? userId : "-"));
     return response;
 }
 
-export const getAllByTag = async (tag) => {
-    const response = tag.toLocaleLowerCase() == "all" ?
-        getAll() 
+export const getAllByTag = async (tag, userId) => {
+    const response = tag.toLocaleLowerCase() == "favourites" ?
+        await axios.get("/api/foods/tags/favourites/" + userId)
         :
         await axios.get("/api/foods/tags/" + tag);
     return response;
 }
 
+// favourite in food page not working ...
+
 export const searchFood = async (searchTerm) => {
     const response = await axios.get("/api/foods/search/" + searchTerm);
     return response;
+}
+
+export const saveSearchTerm = async (id , term) => {
+    await axios.post("/api/foods/saveSearch", {id , term});
+}
+export const removeSearchTerm = async (id , term) => {
+    await axios.post("/api/foods/removeSearch", {id , term});
 }
 
 export const foodById = async (id) => {
@@ -41,3 +50,35 @@ export async function add(food) {
     return data;
 }
   
+export async function submitReview(rating , comment, id, email) {
+    const { data } = await axios.post('/api/foods/review', {rating, comment, id, email});
+    return data;
+}
+
+export async function getReviewsById(id) {
+    const {data} = await axios.get("/api/foods/reviews/" + id);
+    return data;
+}
+export async function deleteReviewById(reviewId, foodId) {
+    const { data } = await axios.delete(`/api/foods/review`, {
+        params: { reviewId, foodId },
+    });
+    return data;
+}
+
+export async function addToFavourites(foodId , userId) {
+    const {data} = await axios.post("/api/foods/favourites",{ foodId, userId});
+    return data;
+}
+export async function removeFromFavourites(foodId , userId) {
+    const {data} = await axios.delete("/api/foods/favourites",{ 
+        params : {foodId, userId}
+    });
+    return data;
+}
+export async function isFavourite(foodId , userId) {
+    const {data} = await axios.get("/api/foods/favourites",{ 
+        params : {foodId, userId}
+    });
+    return data;
+}

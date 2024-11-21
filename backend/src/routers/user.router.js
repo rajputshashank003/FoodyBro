@@ -9,6 +9,23 @@ import admin from "../middleware/admin.mid.js";
 
 const router = Router();
 
+router.get("/verifytoken" , 
+  auth , 
+  handler (async (req ,res) => {
+    try {
+      res.status(200).json({
+          success : true,
+          msg : "User data fetched",
+      })
+    } catch (err){
+        return res.status(401).json({
+            success: false,
+            msg : err.message
+        })
+    }
+  }
+));
+
 router.post("/login", handler( async (req, res) => {
     const {email, password} = req.body;
 
@@ -140,7 +157,7 @@ const generateTokenResponse = user => {
     },
     process.env.JWT_SECRET,
     {
-        expiresIn:"30d"
+        expiresIn:"7d"
     }
     );
     return {

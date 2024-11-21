@@ -1,6 +1,6 @@
 import React from 'react'
 import Chip from '@mui/material/Chip';
-
+import { getUser } from '../../Services/userService';
 export default function Tags({tags }) {
   return (
     <>
@@ -12,3 +12,5 @@ export default function Tags({tags }) {
     </>
   )
 }
+// get all favourites by just clicking on the chip
+// all other are fixed 

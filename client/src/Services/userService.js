@@ -50,4 +50,13 @@ export const toggleBlock = async userId => {
     const { data } = await axios.put('/api/users/update', userData);
     return data;
   };
-  
+
+export const verifyToken = async () => {
+    try {
+        const {data} = await axios.get("/api/users/verifytoken");
+        return data;
+    } catch (err) {
+        return err.response.data;
+    }
+    
+}

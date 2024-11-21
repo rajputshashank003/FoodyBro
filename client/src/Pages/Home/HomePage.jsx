@@ -1,27 +1,42 @@
 import {React, useState, useEffect} from 'react';
 import Thumbnail from '../../components/Thumbnails/Thumbnail.jsx';
 import classes from "./HomePage.module.css";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Tags from '../../components/Tags/Tags.jsx';
 import NotFound from '../../components/NotFound/NotFound.jsx';
 import { getAll , getAllTags ,searchFood , getAllByTag} from '../../Services/services.js';
 import axios from 'axios';
+import {verifyToken, getUser} from "../../Services/userService.js";
 
 export default function HomePage() {
   const [sample_foods , setSampleFoods] = useState([]);
   const [sample_tags , setSampleTags] = useState([]);
   const {searchTerm, tag} = useParams();
   const userData = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+  useEffect(() => {
+    const verify = async () => {
+      if(!userData) return ;
+      const data = await verifyToken();
+      if(!data.success){
+        localStorage.removeItem("user");
+        navigate("/login");
+      }
+    }
+    verify();
+  },[]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseTag = await getAllTags();
+        const userId = getUser() ? getUser().id : "";
+
+        const responseTag = await getAllTags(userId);
         setSampleTags(responseTag.data);
         
         let responseFood;
         if (tag) {
-          responseFood = await getAllByTag(tag);
+          responseFood = await getAllByTag(tag, userId);
         } else if (searchTerm) {
           responseFood = await searchFood(searchTerm);
         } else {

@@ -10,12 +10,16 @@ import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import Rating from '@mui/material/Rating';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Price from '../Price/Price.jsx';
 import { useCart } from '../Hooks/useCart.jsx';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import classes from "./Thumbnail.module.css";
 import { useState } from 'react';
+import { useEffect } from 'react';
+import * as userService from "../../Services/userService.js"
+import { addToFavourites, isFavourite, removeFromFavourites, saveSearchTerm ,removeSearchTerm} from '../../Services/services.js';
+import { toast } from 'react-toastify';
 
 export default function MediaCard({food}) {
     const defaultImage = "/foods/";
@@ -23,7 +27,37 @@ export default function MediaCard({food}) {
     const handleAddToCart = () => {
       addToCart(food);
     }
+
     const [favoriteFood , setFavouriteFood] = useState(false);
+
+    useEffect(() => {
+      async function check(){
+        const res = await isFavourite(food.id, userService.getUser().id);
+        if(res.success){
+          setFavouriteFood(res.data);
+        }
+      }
+      if(userService.getUser()){
+        check();
+      }
+    },[]);
+    const navigate = useNavigate();
+    const handleFavouriteFood = async () => {
+      if(!userService.getUser()) {
+        navigate("/login");
+        toast.error("login before adding to favourite");
+        return ;
+      }
+      if(!favoriteFood){
+        const res = await addToFavourites(food.id, userService.getUser().id);
+        await saveSearchTerm(userService.getUser().id ,food.name);
+        setFavouriteFood((prev) => !prev);
+      } else {
+        const res = await removeFromFavourites(food.id, userService.getUser().id);
+        await removeSearchTerm(userService.getUser().id ,food.name);
+        setFavouriteFood((prev) => !prev);
+      }
+    }
   return (
     <div className={classes.main} >
     <Card sx={{ maxWidth: 345 }}>
@@ -41,11 +75,11 @@ export default function MediaCard({food}) {
               {food.name}
               </Typography>
             </Link>
-            <IconButton onClick={() => setFavouriteFood((prev) => !prev)} aria-label="add to favorites" style={{position:"relative", top:"-0.2rem"}}>
+            <IconButton onClick={handleFavouriteFood} aria-label="add to favorites" style={{position:"relative", top:"-0.2rem"}}>
             <FavoriteIcon sx={{ color: favoriteFood ? "red" : "grey"}}/>
             </IconButton>
         </span>    
-        <Rating name="read-only" value={food.stars} readOnly />
+        <Rating name="read-only" value={food.rating} readOnly />
         <span style={{display:"flex" , justifyContent:"space-between"}}>
             <Typography gutterBottom variant="h6" component="span">
             <Price price={food.price}/>

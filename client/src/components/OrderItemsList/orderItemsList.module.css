@@ -24,3 +24,9 @@
 .table a:hover {
   opacity: 0.9;
 }
+
+/* @media only screen and (max-width: 500px) {
+  .price{
+      font-size: small;
+  }
+} */
