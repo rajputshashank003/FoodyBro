@@ -17,6 +17,7 @@ import UsersPage from './Pages/UsersPage/UsersPage.jsx';
 import FoodEditPage from './Pages/FoodEdit/FoodEditPage.jsx';
 import FoodsAdminPage from './Pages/FoodsAdmin/FoodsAdminPage.jsx';
 import AdminRoute from './components/AdminRoute/AdminRoute.jsx';
+import EmailVerification from './Pages/EmailVerification/EmailVerification.jsx';
 
 export default function AppRoutes() {
   return (
@@ -112,6 +113,7 @@ export default function AppRoutes() {
           </AdminRoute>
         }
       />
+      <Route path="/email_verification" element={<EmailVerification />} />
     </Routes>
   )
 }

@@ -39,17 +39,27 @@ export const changePassword = async (passData) => {
 export const toggleBlock = async userId => {
     const { data } = await axios.put('/api/users/toggleBlock/' + userId);
     return data;
-  };
+};
   
-  export const getById = async userId => {
+export const getById = async userId => {
     const { data } = await axios.get('/api/users/getById/' + userId);
     return data;
-  };
-  
-  export const updateUser = async userData => {
+};
+
+export const updateUser = async userData => {
     const { data } = await axios.put('/api/users/update', userData);
     return data;
-  };
+};
+
+export const mail_verification = async id => {
+    const { data } = await axios.put('/api/users/email_verification/'+ id);
+    return data;
+};
+
+export const sendEmailVerification = async id => {
+    const data = await axios.get('/api/users/send_email_verification/'+ id);
+    return data;
+};
 
 export const verifyToken = async () => {
     try {

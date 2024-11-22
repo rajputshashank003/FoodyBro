@@ -9,6 +9,7 @@ export const userSchema = new mongoose.Schema(
         phone : {type : Number , required : true},
         isAdmin : { type : Boolean , default : false} ,
         favourite_food: { type: [String], ref: "food" },
+        is_verified : {type : Boolean , default : false}
     },
     {
         timestamps : true ,

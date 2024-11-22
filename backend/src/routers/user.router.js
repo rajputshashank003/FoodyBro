@@ -6,6 +6,7 @@ import { userModel } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import auth from "../middleware/Auth.mid.js";
 import admin from "../middleware/admin.mid.js";
+import {sendMail} from "../mailer/mailer.js";
 
 const router = Router();
 
@@ -54,10 +55,106 @@ router.post("/register",
             phone,
         }
 
-        const resultUser = await userModel.create(newUserDetails); // this result user also has id ;
+        const resultUser = await userModel.create(newUserDetails);
+
+        const msg = ` <p> 
+                        <h2> Hello ,
+                          <b> ${resultUser.name}</b> 
+                        </h2> 
+                        <br><br>
+                        Please 
+                        <a href='${process.env.CLIENT}/email_verification?id=${resultUser._id}' >
+                          Verify
+                        </a> 
+                        your e-mail
+                      </p>`;
+        sendMail(email, "Mail Verification", msg);
         res.send(generateTokenResponse(resultUser));
     })
-)
+);
+router.put("/email_verification/:id", async (req, res) => {
+  try {
+    if(req.params.id === undefined){
+        return res.status(200).json({
+            success : false,
+            msg : "id undefined"
+        })
+    }
+    const userData = await userModel.findOne({_id: req.params.id});
+    if(userData){
+      if(userData.is_verified){
+          return res.status(200).json({
+              success : true
+          })
+      }
+      const updatedUser = await userModel.findOneAndUpdate(
+        {_id : req.params.id},
+        {
+          $set:{
+              is_verified : true
+          },
+        },
+        {new : true}
+      );
+      return res.status(200).json({
+          success : true,
+          data : updatedUser
+      })
+    } else {
+        return res.status(400).json({
+            success : false
+        })
+    }
+  } catch (err){
+      return res.status(400).json({
+          success : false
+      })
+  }
+});
+
+router.get("/send_email_verification/:id", async (req, res) => {
+  try {
+    if(req.params.id === undefined){
+      return res.status(401).json({
+        success : false,
+        msg : "id undefined"
+      })
+    }
+    const userData = await userModel.findById({_id : req.params.id});
+    if(!userData){
+        return res.status(400).json({
+            success : false,
+            msg : "user doesn't exist"
+        })
+    }
+    if(userData.is_verified){
+        return res.status(200).json({
+            success : true,
+            msg : userData.email + " is already verified"
+        });
+    }
+    const msg = ` <p> 
+                    <h2> Hello ,
+                      <b> ${userData.name}</b> 
+                    </h2> 
+                    <br><br>
+                    Please 
+                    <a href='${process.env.CLIENT}/email_verification?id=${req.params.id}' >
+                      Verify
+                    </a> 
+                    your e-mail
+                  </p>`;
+    sendMail(userData.email, "Mail Verification", msg);
+
+    return res.status(200).json({
+        success : true,
+        msg : "Verification link sent!",
+        userData 
+    });
+  } catch (err){
+    console.log(err);
+  }
+})
 
 router.put("/updateProfile",
     auth ,
@@ -161,8 +258,14 @@ const generateTokenResponse = user => {
     }
     );
     return {
-        id:user.id, email: user.email, isAdmin : user.isAdmin, 
-        name:user.name,address: user.address , phone : user.phone , token
+        id:user.id, 
+        email: user.email, 
+        isAdmin : user.isAdmin, 
+        name:user.name,
+        address: user.address ,
+        phone : user.phone , 
+        token , 
+        is_verified : user.is_verified
     }
 }
 

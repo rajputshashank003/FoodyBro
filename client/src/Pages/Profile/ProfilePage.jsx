@@ -2,8 +2,11 @@ import React , {useEffect, useState} from "react";
 import classes from "./ProfilePage.module.css";
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { useAuth } from "../../components/Hooks/useAuth";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
+import * as userService from "../../Services/userService.js";
+import { toast } from "react-toastify";
 
 export default function ProfilePage () {
     const {user , updateProfile} = useAuth();
@@ -32,6 +35,10 @@ export default function ProfilePage () {
         });
     };
 
+    const sendEmailVerification = async () => {
+        const {data} = await userService.sendEmailVerification(user.id);
+        toast.success(data.msg);
+    }
     return (
         <>
             <div className={classes.main}>
@@ -64,6 +71,18 @@ export default function ProfilePage () {
                         defaultValue={user.phone}
                         onChange={handleChange}
                     />
+                    {
+                        user.is_verified &&
+                        <Alert 
+                            severity="success"
+                            sx={{
+                                marginBottom: "6%",
+                                width : "90%",
+                            }}
+                        >
+                            Email Verified
+                        </Alert>
+                    }
                     <Button 
                         type="submit" 
                         variant='contained' 
@@ -79,7 +98,27 @@ export default function ProfilePage () {
                         }} >
                             Update
                     </Button>
+                    
                 </form>
+                {
+                    !user.is_verified &&
+                    <div className={classes.hover_container}>
+                        <Alert 
+                            onClick={sendEmailVerification} 
+                            variant="outlined" 
+                            severity="error" 
+                            sx={{
+                                marginBottom: "4%",
+                                cursor: "pointer",
+                                width: "97%",
+                                color: "red",
+                            }}
+                        >
+                            click to verify your email
+                        </Alert>
+                    </div>
+
+                }
                 <ChangePassword/>
             </div>
         </>
