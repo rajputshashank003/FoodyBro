@@ -64,12 +64,12 @@ router.delete("/favourites", handler (async (req, res) => {
 }));
 
 router.post("/review", handler (async (req, res) => {
-  const {id , comment , rating, email} = req.body;
+  const {id , comment , rating, email, name} = req.body;
   const foodProduct = await foodModel.findByIdAndUpdate(
     {_id : id},
     {
       $push : {
-        reviews : {comment , rating, email}
+        reviews : {comment , rating, email, name}
       }
     },
     {new : true}
@@ -243,9 +243,6 @@ router.get('/recommendations/:userId', async (req, res) => {
   }
 });
 
-
-
-
 router.get("/tags/getAll/:userId", handler (async (req, res) => {
     const {userId} = req.params;
     const tags = await foodModel.aggregate([
@@ -286,8 +283,11 @@ router.get("/tags/getAll/:userId", handler (async (req, res) => {
     } );
     ans.sort(( ele1, ele2) => ele2.count - ele1.count);
     if(userId && userId !== "-"){
-      const foodIds = (await userModel.findById({_id : userId})).favourite_food ;
-      ans.unshift({name : "favourites" , count : foodIds.length });
+      const foodIds = await userModel.findById({_id : userId});
+      if(!foodIds.favourite_food) {
+        return res.send(ans);
+      }
+      ans.unshift({name : "favourites" , count : foodIds.favourite_food.length });
     } else {
       console.log("user Id is empty");
     }

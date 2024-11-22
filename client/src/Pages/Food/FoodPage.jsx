@@ -13,14 +13,7 @@ import { foodById, getReviewsById,isFavourite, submitReview , deleteReviewById, 
 import Textarea from '@mui/joy/Textarea';
 import * as userService from "../../Services/userService.js"
 import { toast } from "react-toastify";
-
-// delete review  - done
-// add load more review functionality in reviews 
-// add logout when token expired - done
-// manage token fully - done
-// add emailer 
-// add router.use auth in backend for add review - done
-// create favourites tag also 
+import {useAuth} from "../../components/Hooks/useAuth.jsx";
 
 export default function FoodPage() {
   const { id } = useParams();
@@ -34,9 +27,9 @@ export default function FoodPage() {
   const [food, setFood] = useState();
   const [reviews, setReviews] = useState([]);
   const [favoriteFood , setFavouriteFood] = useState(false);
-  const [currUserEmail, setCurrUserEmail] = useState(userService.getUser() ? userService.getUser().email : null);
   const [ratingValue, setRatingValue] = useState(1); 
   const [comment, setComment] = useState(""); 
+  const auth = useAuth();
 
   useEffect( () => {
     async function find(){
@@ -74,7 +67,7 @@ export default function FoodPage() {
   };
   const onReviewSubmit = async () => {
     if(comment.length == 0) return ;
-    const res = await submitReview(ratingValue, comment, id ,  currUserEmail);
+    const res = await submitReview(ratingValue, comment, id ,  auth.user.email , auth.user.name);
     if(res.success){
       setReviews(res.data.reviews);
       setFood(res.data);
@@ -168,7 +161,7 @@ export default function FoodPage() {
             reviews.map((review, ind) => (
               <div key={ind} className={classes.reviewBox}>
                 <span className={classes.title}>
-                  {review.email}
+                  {review.name}
                 </span>
                 <div className={classes.ratingBox}>
                   <Rating name="size-large" readOnly onChange={handleRatingChange} defaultValue={review.rating} size="large"/>
@@ -179,7 +172,7 @@ export default function FoodPage() {
                 <div className={classes.commentText}>
                   {review.comment}
                 </div>
-                {currUserEmail === review.email && <div className={classes.deleteButton}>
+                {auth.user && auth.user.email === review.email && <div className={classes.deleteButton}>
                   <Button
                     variant="contained"
                     onClick={() => onReviewDelete(review._id)}

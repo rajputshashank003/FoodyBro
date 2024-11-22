@@ -50,8 +50,8 @@ export async function add(food) {
     return data;
 }
   
-export async function submitReview(rating , comment, id, email) {
-    const { data } = await axios.post('/api/foods/review', {rating, comment, id, email});
+export async function submitReview(rating , comment, id, email, name) {
+    const { data } = await axios.post('/api/foods/review', {rating, comment, id, email, name});
     return data;
 }
 

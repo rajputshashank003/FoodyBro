@@ -3,6 +3,7 @@ import { model, Schema } from 'mongoose';
 export const ReviewSchema = new Schema(
   {
     email : {type : String , required : true},
+    name : {type : String , required : true},
     rating: { type: Number, default: 1 },
     comment : {type : String , required : true}
   }
