@@ -25,3 +25,12 @@
         justify-content: center;
     }
 }
+
+.email_verification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    padding-top : 1.5rem;
+}
