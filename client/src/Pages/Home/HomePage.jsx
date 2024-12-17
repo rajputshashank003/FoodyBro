@@ -72,7 +72,7 @@ export default function HomePage() {
           </div>
         }
         {
-          user && !user.is_verified &&
+          user && !user.is_verified ?
           <div className={classes.email_verification}>
             <Alert 
                 onClick={sendEmailVerification} 
@@ -89,6 +89,10 @@ export default function HomePage() {
             >
                 click to verify your email
             </Alert>
+          </div>
+          :
+          <div style={{fontSize : "40px"}}>
+            user not found
           </div>
         }
         {
