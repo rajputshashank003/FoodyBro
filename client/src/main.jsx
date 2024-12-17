@@ -6,7 +6,6 @@ import "./axiosConfig.js";
 import { AuthProvider } from './components/Hooks/useAuth.jsx';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
 import { BrowserRouter } from 'react-router-dom'
 import CartProvider from './components/Hooks/useCart.jsx'
 import { LoadingProvider } from './components/Hooks/useLoading.jsx';

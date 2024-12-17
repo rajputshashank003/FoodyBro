@@ -6,7 +6,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 
 export default function NotFound({message, linkRoute, linkText}) {
   return (
-      <Link style={{color :"white"}} className={classes.linkTag} to={linkRoute}>
+      <Link style={{color :"white", minHeight : "100vh"}} className={classes.linkTag} to={linkRoute}>
         <Alert severity="info" variant='filled' sx={{bgcolor:"#d32f2f"}}>
           <AlertTitle sx={{fontWeight:"bolder"}}>{message}</AlertTitle>
           {linkText}

@@ -76,7 +76,7 @@ export default function MediaCard({food}) {
               </Typography>
             </Link>
             <IconButton onClick={handleFavouriteFood} aria-label="add to favorites" style={{position:"relative", top:"-0.2rem"}}>
-            <FavoriteIcon sx={{ color: favoriteFood ? "red" : "grey"}}/>
+            <FavoriteIcon sx={{ color: favoriteFood ? "#D32F2F" : "grey"}}/>
             </IconButton>
         </span>    
         <Rating name="read-only" value={food.rating} readOnly />
@@ -95,7 +95,7 @@ export default function MediaCard({food}) {
               food.origins.map( (origin) => <Chip key={origin} label={origin}/> )
           }
           <br/>
-          <Button variant="contained" sx={{bgcolor:"red", marginTop:"1rem"}} onClick={handleAddToCart}><AddShoppingCartIcon /></Button>
+          <Button variant="contained" sx={{bgcolor:"#D32F2F", marginTop:"1rem"}} onClick={handleAddToCart}><AddShoppingCartIcon /></Button>
       </CardContent>
     </Card>
     </div>
