@@ -9,11 +9,50 @@ import { userModel } from "../models/user.model.js";
 
 const router = Router();
 
-router.get("/",
-    handler ( async (req,res) => {
-    const result = await foodModel.find({});
-    res.send(result);
-}));
+const removeDuplicatesById = (foods) => {
+  const seen = new Set();
+  return foods.filter((food) => {
+      if (seen.has(food._id.toString())) return false;
+      seen.add(food._id.toString());
+      return true;
+  });
+};
+
+router.get("/", async (req, res) => {
+  try {
+      const userId = req.query.id; 
+      const allFoods = await foodModel.find({});
+
+      if (!userId) {
+          return res.send(allFoods);
+      }
+      const recommendedItems = await getRecommendations(userId);
+
+      let sortedFoods = [];
+      const notRecommendedFoods = [];
+      recommendedItems.forEach((item) => {
+          const foodsWithItem = allFoods.filter((food) =>
+              food.name.toLowerCase().includes(item.toLowerCase())
+          );
+          sortedFoods.push(...foodsWithItem);
+      });
+      allFoods.forEach((food) => {
+          if (
+              !recommendedItems.some((item) =>
+                  food.name.toLowerCase().includes(item.toLowerCase())
+              )
+          ) {
+              notRecommendedFoods.push(food);
+          }
+      });
+      sortedFoods.push(...notRecommendedFoods);
+      sortedFoods = removeDuplicatesById(sortedFoods);
+      res.send(sortedFoods);
+  } catch (error) {
+      console.error("Error fetching food data:", error);
+      res.status(500).send({ error: "Error fetching food data." });
+  }
+});
 
 router.get("/favourites", handler (async (req, res) => {
   const {userId , foodId} = req.query;
