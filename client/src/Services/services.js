@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const getAll = async () => {
-    const response =  await axios.get(`/api/foods`);
+export const getAll = async (id) => {
+    const response =  await axios.get(`/api/foods` + (id ? "?id=" + id : ""));
     return response;
 }
 
