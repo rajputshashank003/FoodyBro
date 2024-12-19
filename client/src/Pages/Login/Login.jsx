@@ -29,7 +29,7 @@ export default function Login() {
   }
 
   return (
-    <div className={classes.main}>
+    <div className={classes.main + " min-h-svh"}>
       <h1 className={classes.login}>Login</h1>
         <form onSubmit={handleSubmit} noValidate>
           <TextField sx={{height:"5rem", width:"15rem"}} name='email' label="Email" type='email' variant="standard" required/>

@@ -13,7 +13,7 @@ import "./components/Interceptors/AuthInterceptor.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className='absolute w-screen bg-gradient-to-tr from-[#eda6a6] via-white'>
+    <div className='absolute min-h-svh w-screen bg-gradient-to-tr from-[#eda6a6] via-white'>
     <BrowserRouter >
       <LoadingProvider>
         <AuthProvider>
