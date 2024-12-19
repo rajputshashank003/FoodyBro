@@ -215,7 +215,7 @@ export default function PrimarySearchAppBar() {
 
 
   return (
-    <div className={classes.mainDiv} style={{borderRadius:"0.5rem" , overflow:"hidden"}}>
+    <div className={classes.mainDiv} style={{borderRadius:"0.5rem", overflow:"hidden"}}>
     <Box sx={{ flexGrow: 1}} >
       <AppBar position="static" sx={{bgcolor:"error.main"}}>
         <Toolbar>

@@ -13,7 +13,8 @@ import "./components/Interceptors/AuthInterceptor.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <div className='absolute w-screen bg-gradient-to-tr from-[#eda6a6] via-white'>
+    <BrowserRouter >
       <LoadingProvider>
         <AuthProvider>
           <CartProvider>
@@ -27,5 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </AuthProvider>
       </LoadingProvider>
     </BrowserRouter>  
+    </div>
   </React.StrictMode>,
 )

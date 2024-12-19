@@ -18,11 +18,14 @@ import FoodEditPage from './Pages/FoodEdit/FoodEditPage.jsx';
 import FoodsAdminPage from './Pages/FoodsAdmin/FoodsAdminPage.jsx';
 import AdminRoute from './components/AdminRoute/AdminRoute.jsx';
 import EmailVerification from './Pages/EmailVerification/EmailVerification.jsx';
+import LandingPage from './Pages/LandingPage/LandingPage.jsx';
+import NotFound from './components/NotFound/NotFound.jsx';
 
 export default function AppRoutes() {
   return (
     <Routes>
-        <Route path="/" element={<HomePage/>}/>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/home" element={<HomePage/>}/>
         <Route path="/search/:searchTerm" element={<HomePage/>}/>
         <Route path="/tag/:tag" element={<HomePage />} />
         <Route path="/food/:id" element={<FoodPage />} />
@@ -114,6 +117,7 @@ export default function AppRoutes() {
         }
       />
       <Route path="/email_verification" element={<EmailVerification />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
