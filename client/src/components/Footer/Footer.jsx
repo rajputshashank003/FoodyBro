@@ -13,7 +13,7 @@ function Footer() {
                 <li>
                     <a href="https://github.com/rajputshashank003" className="hover:underline me-4 md:me-6">Github</a>
                 </li>
-                <li>
+                <li className='max-sm:flex max-sm:flex-row max-sm:w-[10rem]'>
                     <a href="https://github.com/rajputshashank003/FoodyBro" className="hover:underline me-4 md:me-6">Project Repository</a>
                 </li>
                 <li>
