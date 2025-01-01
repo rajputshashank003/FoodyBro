@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import MotionCard  from './MotionCard';
 
@@ -66,14 +66,16 @@ function LandingPage() {
                   </div>
 
                   <div className="text-center text-lg mb-8 md:text-xl">
-                    Celebrate the joy of discovering your favorite meals with FoodyBro—track your cravings, orders, and share your food experiences with friends.
+                    Want to see more deployments like this? Click Learn More to explore more deployments.
                   </div>
  
-                  <div className="flex items-center gap-4 mt-4 text-lg">
-                    <div onClick={() => navigate("/home")} className="cursor-pointer hover:underline">
-                      Learn more
-                      {/* <FaArrowRight className="h-3 w-3 inline ml-2" /> */}
-                    </div>
+                  <div className="flex items-center w-full justify-center gap-4 mt-4 text-lg">
+                    <Link to={"https://reviewstemplate.vercel.app"}>
+                      <div className="cursor-pointer hover:underline">
+                        Learn more
+                        {/* <FaArrowRight className="h-3 w-3 inline ml-2" /> */}
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </MotionCard>
