@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import MotionCard  from './MotionCard';
+import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTriggerFoods';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -19,9 +20,12 @@ function LandingPage() {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
     const navigate = useNavigate();
+    const stfm4 = useRef();
+
     return (
           <section
-            className="p-8 pb-16 md:p-10 lg:p-20 font-medium  overflow-x-clip md:items-center gap-3"
+            ref={stfm4}
+            className="p-8 pb-16 md:p-10 lg:p-20 font-medium overflow-x-clip md:items-center gap-3"
             >
             <div className=" ">
               <div className="max-md:w-[90%] ">
@@ -53,6 +57,10 @@ function LandingPage() {
                     ORDER <span className='text-[#D32F2F] font-bold'>NOW</span>
                   </div>
                 </div>
+              </div>
+
+              <div className=''>
+                <ScrollTriggerFoods stfm4={stfm4}/>
               </div>
       
               <div className="">

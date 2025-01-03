@@ -30,6 +30,7 @@
     height: 26rem;
     width: 30rem;
     border-radius: 0.5rem;    
+    object-fit : cover
 }
 p{
     font-size: 1.5rem;
