@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import MotionCard  from './MotionCard';
 import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTriggerFoods';
+import ChillAnimation from '../../components/CanvasAnimation/ChillAnimation';
+import data from '../../components/CanvasAnimation/data';
+import LocomotiveScroll from "locomotive-scroll";
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -22,11 +25,22 @@ function LandingPage() {
     const navigate = useNavigate();
     const stfm4 = useRef();
 
+    useEffect(() => {
+      const locomotiveScroll = new LocomotiveScroll();
+    },[]);
+
     return (
           <section
             ref={stfm4}
-            className="p-8 pb-16 md:p-10 lg:p-20 font-medium overflow-x-clip md:items-center gap-3"
+            className="p-8 pb-16 md:p-10 main_root lg:p-20 font-medium overflow-x-clip md:items-center gap-3"
             >
+            <div className='h-screen w-screen absolute max-sm:scale-[0.9] overflow-hidden'>
+              <div className='relative h-full w-full'>
+              {
+                data[1].map((canvasdets, index) => <ChillAnimation key={index} details={canvasdets} />)
+              }
+              </div>
+            </div>
             <div className=" ">
               <div className="max-md:w-[90%] ">
                 <div className="text-4xl z-[99] md:text-7xl pb-4 font-black bg-gradient-to-b from-[#D32F2F] to-[#e3acac] text-transparent bg-clip-text tracking-tighter">

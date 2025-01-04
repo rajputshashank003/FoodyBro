@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/all';
 import { bg_images_url } from './backgroundImges';
 import { useNavigate } from 'react-router-dom';
+import LocomotiveScroll from 'locomotive-scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,15 +104,15 @@ const ScrollTriggerFoods = ({stfm4}) => {
         
         // color change animation --
         
-        if(!stfm4.current) return ;
-        const colorChangeTarget = stfm4.current ;
+        // if(!stfm4.current) return ;
+        const colorChangeTarget = ".main_root" ;
         gsap.to(colorChangeTarget, {
             backgroundColor: "rgb(254 226 226)",
             scrollTrigger: {
                 trigger: ".stfm1",
                 start: "top 6%",
                 end: "top -16%",
-                scrub: true,
+                scrub: 2,
             },
         });
         
@@ -121,7 +122,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                 trigger: ".stfm1",
                 start: "top -20%",
                 end: "top -30%",
-                scrub: true, 
+                scrub: 2, 
             },
         });
         
@@ -131,7 +132,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                 trigger: ".stfm1",
                 start: "top -35%",
                 end: "top -52%", 
-                scrub: true,
+                scrub: 2,
             },
         });
         gsap.to(colorChangeTarget, {
@@ -140,7 +141,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                 trigger: ".stfm1",
                 start: "top -58%",
                 end: "top -90%", 
-                scrub: true,
+                scrub: 2,
             },
         });
 
@@ -150,10 +151,17 @@ const ScrollTriggerFoods = ({stfm4}) => {
         window.scrollTo(0, 0);
         ScrollTrigger.refresh();
     }, []);
+
+    const scrollTriggerFoodsRef = useRef();
+    useEffect(() => {
+        const locomotiveScroll = new LocomotiveScroll({
+            el : scrollTriggerFoodsRef.current
+        });
+    } , []);
     
     const navigate = useNavigate();
     return (
-        <div className='stfm4'>
+        <div ref={scrollTriggerFoodsRef} className='stfm4'>
         <div className='ScrollTriggerFoods_main h-screen grid grid-cols-2 overflow-hidden'>
             <div className='col-span-1 max-sm:absolute max-sm:invisible stfm1 h-full w-full flex justify-center items-end flex-col'>
                 <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
