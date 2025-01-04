@@ -119,7 +119,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "rgb(220 252 231)",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -16%",
+                start: "top -20%",
                 end: "top -30%",
                 scrub: true, 
             },
@@ -129,7 +129,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "rgb(219 234 254)",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -30%",
+                start: "top -35%",
                 end: "top -52%", 
                 scrub: true,
             },
@@ -138,7 +138,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "transparent",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -52%",
+                start: "top -58%",
                 end: "top -90%", 
                 scrub: true,
             },
