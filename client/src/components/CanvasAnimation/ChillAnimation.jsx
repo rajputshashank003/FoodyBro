@@ -28,7 +28,7 @@ function ChillAnimation({ details }) {
   });
 
   useEffect(() => {
-    const scale = window.devicePixelRatio;
+    const scale = 1.1;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const img = new Image();
@@ -50,8 +50,8 @@ function ChillAnimation({ details }) {
       ref={canvasRef}
       className="absolute"
       style={{
-        width: `${size * 1.2}px`,
-        height: `${size * 1.2}px`,
+        width: `${size * 1.1}px`,
+        height: `${size * 1.1}px`,
         top: `${top}%`,
         left: `${left}%`,
         zIndex: `${zIndex}`,

@@ -32,13 +32,13 @@ function LandingPage() {
     return (
           <section
             ref={stfm4}
-            className="p-8 pb-16 md:p-10 main_root lg:p-20 font-medium overflow-x-clip md:items-center gap-3"
+            className="p-8 pb-16 md:p-10 main_root lg:p-20 font-medium overflow-x-clip md:items-center gap-3 overflow-hidden relative"
             >
             <div className='h-screen w-screen absolute max-sm:scale-[0.9] pointer-events-none overflow-hidden'>
               <div className='relative h-full w-full'>
-              {
-                data[1].map((canvasdets, index) => <ChillAnimation key={index} details={canvasdets} />)
-              }
+              {/* {
+                data[0].map((canvasdets, index) => <ChillAnimation key={index} details={canvasdets} />)
+              } */}
               </div>
             </div>
             <div className=" ">

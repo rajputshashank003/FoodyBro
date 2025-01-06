@@ -15,7 +15,7 @@ function Testimonials() {
       <div className="overflow-hidden h-[15rem] mb-12 md:mb-28 lg:mb-36">
         <motion.div
           initial={{
-            translateY : "100%"
+            translateY : "40%"
           }}
           animate={{
             translateY: "-100%",
