@@ -159,9 +159,8 @@ const ScrollTriggerFoods = ({stfm4}) => {
     const [img1Hovered , setImg1Hovered] = useState(false);
     const hoverRef0 = useRef(null);
 
-    const handleMouseEnter1 = (e) => {
+    const handleMouseEnter1 = (e, ind) => {
         setImg1Hovered(true);
-        const childElement = e.target.querySelector('img');
         const bound = hoverRef0.current.getBoundingClientRect();
         mouseX.set(e.clientX - bound.left);
         mouseY.set(e.clientY - bound.top);
@@ -171,33 +170,26 @@ const ScrollTriggerFoods = ({stfm4}) => {
             x : mouseX.current,
             y : mouseY.current
         })
-        gsap.to(e.currentTarget, {
+        gsap.to(".img_par" + ind, {
             scale : 0.95,
             duration : 0.3
         })
-
-        if(!childElement) return ;
-
-        gsap.to(childElement, {
+        gsap.to(".moving_img" + ind, {
             scale : 1.15,
             duration : 0.3
         })
 
     }
-    const handleMouseLeave1 = (e) => {
+    const handleMouseLeave1 = (e, ind) => {
         setImg1Hovered(false);
-        const childElement = e.target.querySelector('img');
         gsap.to(".hover1", {
             opacity : 0,
         })
-        gsap.to(e.currentTarget, {
+        gsap.to(".img_par" + ind, {
             scale : 1,
             duration : 0.3
         })
-
-        if(!childElement) return ;
-
-        gsap.to(childElement, {
+        gsap.to(".moving_img" + ind, {
             scale : 1,
             duration : 0.3
         })
@@ -275,48 +267,44 @@ const ScrollTriggerFoods = ({stfm4}) => {
                                 <IconArrowRight className='h-full w-full'/>
                             </div>
                             <div 
-                                onMouseMove={(e) => handleMouseEnter1(e)} 
-                                onMouseLeave={(e) => handleMouseLeave1(e)} 
+                                onMouseMove={(e) => handleMouseEnter1(e, 0)} 
+                                onMouseLeave={(e) => handleMouseLeave1(e , 0)} 
                                 onClick={() => navigate("/food/6739dc84e485c0b5c0b79546")} 
-                                className="cursor-pointer bg-cover img_par duration-100 z-[9] rounded-xl relative bg-red-300 w-[22rem] h-[25rem] flex justify-center items-center"
+                                className="cursor-pointer bg-cover img_par0 duration-100 z-[9] rounded-xl relative bg-red-300 w-[22rem] h-[25rem] flex justify-center items-center"
                             >
-                                <img className='moving_img0 img_child shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[0]} alt="" />
+                                <img className='moving_img0 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[0]} alt="" />
                             </div>
-
                             <div 
-                                onMouseMove={(e) => handleMouseEnter1(e)} 
-                                onMouseLeave={(e) => handleMouseLeave1(e)} 
+                                onMouseMove={(e) => handleMouseEnter1(e,1)} 
+                                onMouseLeave={(e) => handleMouseLeave1(e,1)} 
                                 onClick={() => navigate("/food/661e7fab816db760e6c416f1")} 
-                                className="cursor-pointer img_par z-[99] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2a backdrop-blur-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className="cursor-pointer img_par1 z-[99] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2a backdrop-blur-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
-                                <img className='moving_img1 img_child shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[1]} alt="" />
+                                <img className='moving_img1 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[1]} alt="" />
                             </div>
-
                             <div 
-                                onMouseMove={(e) => handleMouseEnter1(e)} 
-                                onMouseLeave={(e) => handleMouseLeave1(e)} 
+                                onMouseMove={(e) => handleMouseEnter1(e,2)} 
+                                onMouseLeave={(e) => handleMouseLeave1(e,2)} 
                                 onClick={() => navigate("/food/6739de43181c30bf0b833042")} 
-                                className="cursor-pointer img_par z-[999] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2b bg-green-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className="cursor-pointer img_par2 z-[999] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2b bg-green-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
-                                <img className='moving_img2 img_child shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[2]} alt="" />
+                                <img className='moving_img2 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[2]} alt="" />
                             </div>
-
                             <div 
-                                onMouseMove={(e) => handleMouseEnter1(e)} 
-                                onMouseLeave={(e) => handleMouseLeave1(e)} 
+                                onMouseMove={(e) => handleMouseEnter1(e,3)} 
+                                onMouseLeave={(e) => handleMouseLeave1(e,3)} 
                                 onClick={() => navigate("/food/6739dd92181c30bf0b833035")} 
-                                className="cursor-pointer img_par z-[9999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2c bg-blue-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className="cursor-pointer img_par3 z-[9999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2c bg-blue-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
-                                <img className='moving_img3 img_child shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[3]} alt="" />
+                                <img className='moving_img3 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[3]} alt="" />
                             </div>
-
                             <div 
-                                onMouseMove={(e) => handleMouseEnter1(e)} 
-                                onMouseLeave={(e) => handleMouseLeave1(e)} 
+                                onMouseMove={(e) => handleMouseEnter1(e,4)} 
+                                onMouseLeave={(e) => handleMouseLeave1(e,4)} 
                                 onClick={() => navigate("/food/6739dc84e485c0b5c0b79546")} 
-                                className="cursor-pointer img_par z-[99999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2d bg-gray-300 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className="cursor-pointer img_par4 z-[99999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2d bg-gray-300 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
-                                <img className='moving_img4 img_child shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[4]} alt="" />
+                                <img className='moving_img4 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[4]} alt="" />
                             </div>
                         </div>
                     </div>
