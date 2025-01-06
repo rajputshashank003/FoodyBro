@@ -46,7 +46,7 @@ function ChillAnimation({ details }) {
   return (
     <canvas
       data-scroll
-      data-scroll-speed={Math.random().toFixed(1)}
+      data-scroll-speed={0.2}
       ref={canvasRef}
       className="absolute"
       style={{
