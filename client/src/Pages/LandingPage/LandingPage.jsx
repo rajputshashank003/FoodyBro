@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import MotionCard  from './MotionCard';
 import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTriggerFoods';
-import ChillAnimation from '../../components/CanvasAnimation/ChillAnimation';
-import data from '../../components/CanvasAnimation/data';
 import LocomotiveScroll from "locomotive-scroll";
+import { useMotionValue } from 'framer-motion';
+import gsap from 'gsap';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -29,24 +29,76 @@ function LandingPage() {
       const locomotiveScroll = new LocomotiveScroll();
     },[]);
 
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const mousePointerRef = useRef();
+
+    const handleMouseMotion = (e, ind) => {
+      const bounds = mousePointerRef.current.getBoundingClientRect();
+      mouseX.set(e.clientX - bounds.left);
+      mouseY.set(e.clientY - bounds.top);
+      gsap.to(".mousePointer", {
+        opacity : 1,
+        x : mouseX.current,
+        y : mouseY.current,
+        ease: "power2.out",
+        duration: 0.2,
+      })
+    }
+    const handleMouseLeave = (e, ind) => {
+      gsap.to(".mousePointer", {
+        opacity : 0
+      })
+    }
+    const handleMouseMotionInChessV_title = () => {
+      gsap.to(".mousePointer",{
+        height : "4rem",
+        width : "4rem",
+        backgroundColor : "rgba(0, 0, 0, 0.75)"
+      })
+      gsap.to(".mousePointer_text", {
+        opacity : 1
+      })
+    }
+
+    const handleMouseMotionInChessV_titleLeave = () => {
+      gsap.to(".mousePointer",{
+        height : "0.7rem",
+        width : "0.7rem",
+        backgroundColor : "black",
+      })
+      gsap.to(".mousePointer_text", {
+          opacity : 0
+      })
+    }
+
     return (
           <section
             ref={stfm4}
+            onMouseMove={handleMouseMotion}
+            onMouseLeave={handleMouseLeave}
             className="p-8 pb-16 md:p-10 main_root lg:p-20 font-medium overflow-x-clip md:items-center gap-3 overflow-hidden relative"
             >
-            <div className='h-screen w-screen absolute max-sm:scale-[0.9] pointer-events-none overflow-hidden'>
-              <div className='relative h-full w-full'>
-              {/* {
-                data[0].map((canvasdets, index) => <ChillAnimation key={index} details={canvasdets} />)
-              } */}
+              <div className={`absolute z-[9999999] rounded-full h-[0.7rem] w-[0.7rem] bg-black text-white mousePointer pointer-events-none transform -translate-x-1/2 -translate-y-1/2`}>
+                <div className='mousePointer_text text-sm font-bold opacity-0 h-full w-full relative flex justify-center items-center'>
+                  Click
+                </div>
               </div>
-            </div>
-            <div className=" ">
+              {/* <div className='h-screen w-screen absolute max-sm:scale-[0.9] pointer-events-none overflow-hidden'>
+                <div className='relative h-full w-full'>
+                {
+                  data[0].map((canvasdets, index) => <ChillAnimation key={index} details={canvasdets} />)
+                }
+                </div>
+              </div> */}
+            <div ref={mousePointerRef} className=" ">
               <div className="max-md:w-[90%] ">
                 <div className="text-4xl z-[99] md:text-7xl pb-4 font-black bg-gradient-to-b from-[#D32F2F] to-[#e3acac] text-transparent bg-clip-text tracking-tighter">
                     <span className='text-2xl hover:underline md:text-4xl'>Play on </span> 
                     <a
-                      className=' hover:underline' 
+                      onMouseMove={handleMouseMotionInChessV_title}
+                      onMouseLeave={handleMouseMotionInChessV_titleLeave}
+                      className=' hover:underline ChessV_title' 
                       href='https://chessv.netlify.app'
                     > 
                         ChessV 

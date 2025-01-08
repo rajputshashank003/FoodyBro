@@ -157,18 +157,18 @@ const ScrollTriggerFoods = ({stfm4}) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     const [img1Hovered , setImg1Hovered] = useState(false);
-    const hoverRef0 = useRef(null);
 
     const handleMouseEnter1 = (e, ind) => {
         setImg1Hovered(true);
-        const bound = hoverRef0.current.getBoundingClientRect();
-        mouseX.set(e.clientX - bound.left);
-        mouseY.set(e.clientY - bound.top);
-
-        gsap.to(".hover1", {
-            opacity : 1,
-            x : mouseX.current,
-            y : mouseY.current
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        gsap.to(".mousePointer",{
+            height : "4rem",
+            width : "4rem",
+            backgroundColor : "rgba(0, 0, 0, 0.75)"
+        })
+        gsap.to(".mousePointer_text", {
+            opacity : 1
         })
         gsap.to(".img_par" + ind, {
             scale : 0.95,
@@ -182,8 +182,13 @@ const ScrollTriggerFoods = ({stfm4}) => {
     }
     const handleMouseLeave1 = (e, ind) => {
         setImg1Hovered(false);
-        gsap.to(".hover1", {
-            opacity : 0,
+        gsap.to(".mousePointer",{
+            height : "0.7rem",
+            width : "0.7rem",
+            backgroundColor : "black",
+        })
+        gsap.to(".mousePointer_text", {
+            opacity : 0
         })
         gsap.to(".img_par" + ind, {
             scale : 1,
@@ -193,9 +198,27 @@ const ScrollTriggerFoods = ({stfm4}) => {
             scale : 1,
             duration : 0.3
         })
-
     }
-  
+
+    const handleMouseMouseName = () => {
+        gsap.set(".mousePointer", {
+            zIndex: 0,
+        });
+        gsap.to(".mousePointer",{
+            height : "6rem",
+            width : "6rem",
+            backgroundColor : "rgba(181, 175, 174,0.75)",
+        })
+    }
+    
+    const handleMouseLeaveName = () => {
+        gsap.to(".mousePointer",{
+            height : "0.7rem",
+            width : "0.7rem",
+            backgroundColor : "black",
+            zIndex : "999999"
+        })
+    }
 
     const scrollTriggerFoodsRef = useRef();
     useEffect(() => {
@@ -209,8 +232,14 @@ const ScrollTriggerFoods = ({stfm4}) => {
         <div ref={scrollTriggerFoodsRef} className='stfm4'>
             <div className='ScrollTriggerFoods_main h-screen grid grid-cols-2 overflow-hidden'>
                 <div className='col-span-1 max-sm:absolute max-sm:invisible stfm1 h-full w-full flex justify-center items-end flex-col'>
-                    <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
-                        <div className="flex items-start flex-col w-full">
+                    <div
+                        className='flex h-screen justify-center relative items-end pr-10 w-[80%] flex-col'
+                    >
+                        <div 
+                            onMouseMove={handleMouseMouseName} 
+                            onMouseLeave={handleMouseLeaveName}
+                            className="flex items-start z-[9999] relative flex-col w-full"
+                        >
                             <div className='text-lg text-gray-900 w-full'>
                                 Greek Pizza
                             </div>
@@ -220,7 +249,11 @@ const ScrollTriggerFoods = ({stfm4}) => {
                         </div>
                     </div>
                     <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
-                        <div className="flex items-start flex-col w-full">
+                        <div 
+                            onMouseMove={handleMouseMouseName} 
+                            onMouseLeave={handleMouseLeaveName}
+                            className="flex items-start flex-col w-full"
+                        >
                             <div className='text-lg text-gray-900 w-full'>
                                 Pizza Pepperoni
                             </div>
@@ -230,7 +263,11 @@ const ScrollTriggerFoods = ({stfm4}) => {
                         </div>
                     </div>
                     <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
-                        <div className="flex items-start flex-col w-full">
+                        <div 
+                            onMouseMove={handleMouseMouseName} 
+                            onMouseLeave={handleMouseLeaveName}
+                            className="flex items-start flex-col w-full"
+                        >
                             <div className='text-lg text-gray-900 w-full'>
                                 Pasta
                             </div>
@@ -240,7 +277,11 @@ const ScrollTriggerFoods = ({stfm4}) => {
                         </div>
                     </div>
                     <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
-                        <div className="flex items-start flex-col w-full">
+                        <div 
+                            onMouseMove={handleMouseMouseName} 
+                            onMouseLeave={handleMouseLeaveName}
+                            className="flex items-start flex-col w-full"
+                        >
                             <div className='text-lg text-gray-900 w-full'>
                                 Dosa
                             </div>
@@ -250,7 +291,11 @@ const ScrollTriggerFoods = ({stfm4}) => {
                         </div>
                     </div>
                     <div className='flex h-screen justify-center items-end pr-10 w-[80%] flex-col'>
-                        <div className="flex items-start flex-col w-full">
+                        <div 
+                            onMouseMove={handleMouseMouseName} 
+                            onMouseLeave={handleMouseLeaveName}
+                            className="flex items-start flex-col w-full"
+                        >
                             <div className='text-lg text-gray-900 w-full'>
                                 Pizza Pepperoni
                             </div>
@@ -262,15 +307,12 @@ const ScrollTriggerFoods = ({stfm4}) => {
                 </div>
                 <div className='col-span-1 max-sm:col-span-2 stfm2 '>
                     <div className='h-screen flex justify-start items-center w-full '>
-                        <div ref={hoverRef0}  className='h-fit w-fit rounded-xl relative flex overflow-hidden'>
-                            <div className={`absolute z-[9999999] rounded-full h-[4rem] w-[4rem] opacity-0 text-4xl bg-[#151414] p-2 text-white hover1 ${img1Hovered && "pointer-events-none"}`}>
-                                <IconArrowRight className='h-full w-full'/>
-                            </div>
+                        <div className='h-fit w-fit rounded-xl relative flex overflow-hidden cursor-none'>
                             <div 
                                 onMouseMove={(e) => handleMouseEnter1(e, 0)} 
                                 onMouseLeave={(e) => handleMouseLeave1(e , 0)} 
                                 onClick={() => navigate("/food/6739dc84e485c0b5c0b79546")} 
-                                className="cursor-pointer bg-cover img_par0 duration-100 z-[9] rounded-xl relative bg-red-300 w-[22rem] h-[25rem] flex justify-center items-center"
+                                className="cursor-none bg-cover img_par0 duration-100 z-[9] rounded-xl relative bg-red-300 w-[22rem] h-[25rem] flex justify-center items-center"
                             >
                                 <img className='moving_img0 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[0]} alt="" />
                             </div>
@@ -278,7 +320,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                                 onMouseMove={(e) => handleMouseEnter1(e,1)} 
                                 onMouseLeave={(e) => handleMouseLeave1(e,1)} 
                                 onClick={() => navigate("/food/661e7fab816db760e6c416f1")} 
-                                className="cursor-pointer img_par1 z-[99] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2a backdrop-blur-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className=" img_par1 z-[99] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2a backdrop-blur-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
                                 <img className='moving_img1 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[1]} alt="" />
                             </div>
@@ -286,7 +328,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                                 onMouseMove={(e) => handleMouseEnter1(e,2)} 
                                 onMouseLeave={(e) => handleMouseLeave1(e,2)} 
                                 onClick={() => navigate("/food/6739de43181c30bf0b833042")} 
-                                className="cursor-pointer img_par2 z-[999] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2b bg-green-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className=" img_par2 z-[999] rounded-2xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2b bg-green-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
                                 <img className='moving_img2 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[2]} alt="" />
                             </div>
@@ -294,7 +336,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                                 onMouseMove={(e) => handleMouseEnter1(e,3)} 
                                 onMouseLeave={(e) => handleMouseLeave1(e,3)} 
                                 onClick={() => navigate("/food/6739dd92181c30bf0b833035")} 
-                                className="cursor-pointer img_par3 z-[9999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2c bg-blue-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className=" img_par3 z-[9999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2c bg-blue-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
                                 <img className='moving_img3 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[3]} alt="" />
                             </div>
@@ -302,7 +344,7 @@ const ScrollTriggerFoods = ({stfm4}) => {
                                 onMouseMove={(e) => handleMouseEnter1(e,4)} 
                                 onMouseLeave={(e) => handleMouseLeave1(e,4)} 
                                 onClick={() => navigate("/food/6739dc84e485c0b5c0b79546")} 
-                                className="cursor-pointer img_par4 z-[99999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2d bg-gray-300 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                className="img_par4 z-[99999] rounded-xl w-[22rem] h-[25rem] flex justify-center items-center top-[150%] absolute stfm2d bg-gray-300 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                             >
                                 <img className='moving_img4 shadow-xl rounded-xl shadow-gray-600 object-cover w-[16rem] h-[20rem]' src={bg_images_url[4]} alt="" />
                             </div>
