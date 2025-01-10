@@ -6,6 +6,7 @@ import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTrigge
 import LocomotiveScroll from "locomotive-scroll";
 import { useMotionValue } from 'framer-motion';
 import gsap from 'gsap';
+import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -77,9 +78,9 @@ function LandingPage() {
             ref={stfm4}
             onMouseMove={handleMouseMotion}
             onMouseLeave={handleMouseLeave}
-            className="p-8 pb-16 md:p-10 main_root lg:p-20 font-medium overflow-x-clip md:items-center gap-3 overflow-hidden relative"
+            className="p-8 pb-16 md:p-10 main_root font-medium overflow-x-clip md:items-center gap-3 overflow-hidden relative"
             >
-              <div className={`absolute z-[9999999] rounded-full h-[0.7rem] w-[0.7rem] bg-black text-white mousePointer pointer-events-none transform -translate-x-1/2 -translate-y-1/2`}>
+              <div className={`absolute z-[9999999] max-sm:hidden rounded-full h-[0.7rem] w-[0.7rem] bg-black text-white mousePointer pointer-events-none transform -translate-x-1/2 -translate-y-1/2`}>
                 <div className='mousePointer_text text-sm font-bold opacity-0 h-full w-full relative flex justify-center items-center'>
                   Click
                 </div>
@@ -124,7 +125,9 @@ function LandingPage() {
                   </div>
                 </div>
               </div>
-
+              <div>
+                <GlslImage1/>
+              </div>
               <div className=''>
                 <ScrollTriggerFoods stfm4={stfm4}/>
               </div>
