@@ -8,13 +8,15 @@ const GlslImage1 = () => {
         let motionImages;
         if (containerRef.current) {
             motionImages = new MotionImages({ dom: containerRef.current });
-            return () => {
-                if (motionImages) {
-                    motionImages.renderer.dispose();
-                    containerRef.current.removeChild(motionImages.renderer.domElement);
-                }
-            };
         }
+        return () => {
+            if (motionImages) {
+                motionImages.renderer.dispose();
+            }
+            if (containerRef.current && motionImages?.renderer?.domElement) {
+                containerRef.current.removeChild(motionImages.renderer.domElement);
+            }
+        };
     }, []);
 
     return (
