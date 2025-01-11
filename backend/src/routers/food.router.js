@@ -282,8 +282,8 @@ router.get('/recommendations/:userId', async (req, res) => {
   }
 });
 
-router.get("/tags/getAll/:userId", handler (async (req, res) => {
-    const {userId} = req.params;
+router.get("/tags/getAll", handler (async (req, res) => {
+    const userId = req.query.id; 
     const tags = await foodModel.aggregate([
         {
             $unwind : '$tags' ,
@@ -321,7 +321,7 @@ router.get("/tags/getAll/:userId", handler (async (req, res) => {
         });
     } );
     ans.sort(( ele1, ele2) => ele2.count - ele1.count);
-    if(userId && userId !== "-"){
+    if(userId ){
       const foodIds = await userModel.findById({_id : userId});
       if(!foodIds.favourite_food) {
         return res.send(ans);

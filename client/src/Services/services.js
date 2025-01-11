@@ -6,7 +6,7 @@ export const getAll = async (id) => {
 }
 
 export const getAllTags = async (userId) => {
-    const response =  await axios.get("/api/foods/tags/getAll/" + (userId ? userId : "-"));
+    const response =  await axios.get("/api/foods/tags/getAll" + (userId && "?id=" + userId ));
     return response;
 }
 
