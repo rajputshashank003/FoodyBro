@@ -15,9 +15,9 @@ const ScrollTriggerFoods = ({stfm4}) => {
         gsap.to(".stfm1", {
             scrollTrigger: {
                 trigger: ".ScrollTriggerFoods_main",
-                scrub: 2,
+                scrub : 1,
                 start: "top 0%",
-                end: "top -100%",
+                end: "top -800%",
                 pin: true,
             },
             y: 4 * window.innerHeight * -1,
@@ -29,9 +29,9 @@ const ScrollTriggerFoods = ({stfm4}) => {
             y: animationMoment_y,
             scrollTrigger: {
                 trigger: ".stfm1",
-                scrub: 2,
+                scrub : 1,
                 start: "top 0%",
-                end: "top -15%",
+                end: `top -${15 * 8}%`,
             }
         });
 
@@ -39,27 +39,27 @@ const ScrollTriggerFoods = ({stfm4}) => {
             y: animationMoment_y,
             scrollTrigger: {
                 trigger: ".stfm1",
-                scrub: 2,
-                start: "top -15%",
-                end: "top -30%",
+                scrub : 1,
+                start: `top -${15 * 8}%`,
+                end: `top -${30 * 8}%`,
             }
         });
         gsap.to(".stfm2c", {
             y: animationMoment_y,
             scrollTrigger: {
                 trigger: ".stfm1",
-                scrub: 2,
-                start: "top -30%",
-                end: "top -52%",
+                scrub : 1,
+                start: `top -${30 * 8}%`,
+                end: `top -${52 * 8}%`,
             }
         });
         gsap.to(".stfm2d", {
             y: animationMoment_y,
             scrollTrigger: {
                 trigger: ".stfm1",
-                scrub: 2,
-                start: "top -60%",
-                end: "top -90%",
+                scrub : 1,
+                start: `top -${60 * 8}%`,
+                end: `top -${90 * 8}%`,
             }
         });
 
@@ -112,9 +112,9 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "rgb(254 226 226)",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top 6%",
-                end: "top -16%",
-                scrub: 2,
+                start: `top -${6 * 8}%`,
+                end: `top -${16 * 8}%`,
+                scrub : 1,
             },
         });
         
@@ -122,9 +122,9 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "rgb(220 252 231)",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -20%",
-                end: "top -30%",
-                scrub: 2, 
+                start: `top -${20 * 8}%`,
+                end:`top -${30 * 8}%`,
+                scrub : 1, 
             },
         });
         
@@ -132,18 +132,18 @@ const ScrollTriggerFoods = ({stfm4}) => {
             backgroundColor: "rgb(219 234 254)",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -35%",
-                end: "top -52%", 
-                scrub: 2,
+                start: `top -${35 * 8}%`,
+                end: `top -${52 * 8}%`,
+                scrub : 1,
             },
         });
         gsap.to(colorChangeTarget, {
             backgroundColor: "transparent",
             scrollTrigger: {
                 trigger: ".stfm1",
-                start: "top -58%",
-                end: "top -90%", 
-                scrub: 2,
+                start: `top -${58 * 8}%`,
+                end: `top -${90 * 8}%`,
+                scrub : 1,
             },
         });
 
