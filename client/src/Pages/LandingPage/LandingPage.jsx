@@ -7,6 +7,7 @@ import LocomotiveScroll from "locomotive-scroll";
 import { useMotionValue } from 'framer-motion';
 import gsap from 'gsap';
 import GlslImage1 from '../../components/GlslImage1/GlslImage1';
+import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -131,7 +132,9 @@ function LandingPage() {
               <div className=''>
                 <ScrollTriggerFoods stfm4={stfm4}/>
               </div>
-      
+              <div>
+                <LandingVideoAnimation/>
+              </div>
               <div className="">
                 <Testimonials/>
               </div>
