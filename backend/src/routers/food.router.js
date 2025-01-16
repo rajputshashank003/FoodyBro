@@ -302,35 +302,16 @@ router.get("/tags/getAll", handler (async (req, res) => {
             }
         }
     ]).sort({count : -1 }); // -1 for descending and 1 is for ascending 
-
-    // my define logic for finding tags ;
-
-    const x = await foodModel.find({});
-    const y =  x.map( (food) => {
-        return food.tags;
-    });
-
-    const ans = [];
-    y.map( (arr) => {
-        arr.map( (ele) => {
-            let a = ans.filter( (curr) => {
-                return curr.name == ele && curr.count++
-            });
-            if(a.length > 0) a.count;
-            else ans.push({name : ele , count : 1});
-        });
-    } );
-    ans.sort(( ele1, ele2) => ele2.count - ele1.count);
-    if(userId ){
+    
+    if(userId){
       const foodIds = await userModel.findById({_id : userId});
       if(!foodIds.favourite_food) {
         return res.send(ans);
       }
-      ans.unshift({name : "favourites" , count : foodIds.favourite_food.length });
-    } else {
-      console.log("user Id is empty");
+      tags.unshift({name : "favourites" , count : foodIds.favourite_food.length });
     }
-    res.send(ans);
+
+    res.send(tags);
 }));
 
 router.get("/tags/:tag",handler( async (req, res) => {
