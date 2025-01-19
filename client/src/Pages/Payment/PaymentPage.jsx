@@ -8,9 +8,11 @@ import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import {useCart} from "../../components/Hooks/useCart.jsx";
+import BuyUsingCrypto from '../../components/BuyUsingCrypto/BuyUsingCrypto.jsx';
 
 export default function PaymentPage() {
   const [order, setOrder] = useState();
+  const [cryptoMenu ,  setCryptoMenu] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     getNewOrderForCurrentUser().then(data => setOrder(data));
@@ -27,6 +29,10 @@ export default function PaymentPage() {
     } catch (err) {
       toast.success("Invalid error occured !");
     }
+  }
+
+  const handleCloseCryptoMenu = () => {
+    setCryptoMenu(prev => !prev);
   }
 
   if (!order) return( <>hello order not found ! </>);
@@ -55,8 +61,19 @@ export default function PaymentPage() {
         <div className={classes.mapBox}>
           <Map readonly={true} location={order.addressLatLng} />
         </div>
+        
+        { cryptoMenu && 
+          <div >
+            <BuyUsingCrypto handleCloseCryptoMenu={handleCloseCryptoMenu} handleApprove={handleApprove} amount={order.totalPrice}/>
+          </div>
+        }
 
           <div className={classes.buttonsBox}>
+          <div className='p-2'>
+            <button className='rounded-xl bg-[#D32F2F] p-2 text-xl text-white hover:bg-red-700 duration-200' onClick={handleCloseCryptoMenu}>
+              Pay Using Solana
+            </button>
+          </div>
             <span className={classes.paymentDetails}>Payment Details :<br/></span>
             <ul>
               <li><CopyText data="upi@gmail.com" name="Upi Copied" /></li>

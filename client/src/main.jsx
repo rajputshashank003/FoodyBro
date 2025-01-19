@@ -12,7 +12,7 @@ import { LoadingProvider } from './components/Hooks/useLoading.jsx';
 import "./components/Interceptors/AuthInterceptor.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <div className=' min-h-svh pb-2 w-screen bg-gradient-to-tr from-[#eda6a6] via-white'>
     <BrowserRouter >
       <LoadingProvider>
@@ -29,5 +29,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </LoadingProvider>
     </BrowserRouter>  
     </div>
-  </React.StrictMode>,
+  </>,
 )

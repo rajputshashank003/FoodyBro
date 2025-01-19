@@ -5,6 +5,7 @@
     margin: 1.5rem;
     margin-top: 0.5rem;
     width: 361dp;
+    min-height: 100vh; 
   }
   
   .list {

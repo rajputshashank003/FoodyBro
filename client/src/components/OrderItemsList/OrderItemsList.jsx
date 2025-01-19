@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Price from '../Price/Price';
 import classes from './orderItemsList.module.css';
+import { fetchSolConversionRate } from '../../Services/cryptoService';
 
 export default function OrderItemsList({ order }) {
+  const [sol, setSol] = useState();
+
+  useEffect(() => {
+    const run = async () => {
+      const val = await fetchSolConversionRate(order.totalPrice);
+      setSol(val);
+    }
+    run();
+  }, []);
+
   return (
     <table className={classes.table}>
       <tbody>
@@ -37,6 +48,7 @@ export default function OrderItemsList({ order }) {
           </td>
           <td>
             <h2><b><Price price={order.totalPrice} /></b></h2>
+            <h3><b>{sol} SOL </b></h3>
           </td>
         </tr>
       </tbody>
