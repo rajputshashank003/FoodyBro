@@ -8,6 +8,8 @@ import { useMotionValue } from 'framer-motion';
 import gsap from 'gsap';
 import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
+import SolanaPayInro from './SolanaPayInro';
+import { useGSAP } from '@gsap/react';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -74,6 +76,42 @@ function LandingPage() {
       })
     }
 
+    useGSAP(() => {
+      gsap.from(".solanaLogoLandingPage", {
+        x : 250,
+        duration : 1.5,
+        delay : 1,
+      })
+    })
+
+    const page4Ref = useRef(null);
+    const handleScrollToPage3 = () => {
+      if (page4Ref.current) {
+        page4Ref.current.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    const handleMouseMouseName = () => {
+      gsap.set(".mousePointer", {
+          zIndex: 0,
+      });
+      gsap.to(".mousePointer",{
+          height : "6rem",
+          width : "6rem",
+          backgroundColor : "#14F195",
+      })
+    }
+
+    const handleMouseLeaveName = () => {
+        gsap.to(".mousePointer",{
+            height : "0.7rem",
+            width : "0.7rem",
+            backgroundColor : "black",
+            zIndex : "999999"
+        })
+    }
+
+
     return (
           <section
             ref={stfm4}
@@ -120,9 +158,15 @@ function LandingPage() {
                     Craving something delicious? FoodyBro lets you explore, order, and enjoy your favorite meals with ease!
                 </div>
       
-                <div className="flex items-center gap-3 mt-6 text-lg">
+                <div className="flex items-center justify-between gap-3 mt-6 text-lg">
                   <div onClick={() => navigate("/home")} className="cursor-pointer hover:underline">
                     ORDER <span className='text-[#D32F2F] font-bold'>NOW</span>
+                  </div>
+                  <div onMouseMove={handleMouseMouseName} onMouseLeave={handleMouseLeaveName} onClick={handleScrollToPage3} className='text-xl cursor-pointer solanaLogoLandingPage relative text-black font-bold'>
+                    <img className='w-[10rem]' src="/solanaLogo1.svg" alt="" /> 
+                    <div className='absolute left-[3.2rem] top-[60%]'>
+                      PAY
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,8 +176,11 @@ function LandingPage() {
               <div className=''>
                 <ScrollTriggerFoods stfm4={stfm4}/>
               </div>
-              <div>
+              <div className='relative h-fit'>
                 <LandingVideoAnimation/>
+              </div>
+              <div className='relative h-screen' ref={page4Ref}>
+                <SolanaPayInro/>
               </div>
               <div className="">
                 <Testimonials/>
