@@ -92,7 +92,7 @@ export default function HomePage() {
           </div>
         }
         {
-          (sample_foods && sample_foods.length == 0) ?
+          (!sample_foods || sample_foods.length === 0) ?
             <NotFound message="Reset Search"/>
             :
             <div className={classes.main}>
