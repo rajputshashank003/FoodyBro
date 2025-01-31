@@ -39,7 +39,7 @@ const SolanaPayInro = () => {
     return (
         <div className="relative solanaLogo1_par flex h-screen w-screen">
             <div className="flex absolute -left-8 md:-left-10 justify-center items-center  h-screen w-screen">
-                <div data-scroll-container className='h-screen absolute -left-8 md:-left-10 top-0  w-screen'>
+                <div data-scroll-container className='h-screen max-sm:hidden absolute -left-8 md:-left-10 top-0  w-screen'>
                     <div data-scroll data-scroll-speed={0.2} className="w-3  abcimg h-3 absolute -top-10 left-20 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full  opacity-100"></div>
                     <div data-scroll data-scroll-speed={0.2} className="w-8 abcimg h-8 absolute bottom-36 left-40 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
                     <div data-scroll data-scroll-speed={-0.2} className="w-8 abcimg h-8 absolute -top-28 right-10 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full  opacity-100"></div>

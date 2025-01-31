@@ -93,7 +93,7 @@ const LandingVideoAnimation = () => {
     return (
         <div className='parent_canv h-screen relative w-screen'>
             <canvas id='video_frame' ref={canvasRef} className={`absolute z-[999] h-screen -left-8 md:-left-10`}></canvas>
-            <img src="/frames3/frame_0415.jpeg" className={`absolute z[9] h-screen -left-8 md:-left-10`}  alt="" />
+            <img src="/frames3/frame_0415.jpeg" className={`absolute z[9] h-screen bottom-4 w-screen -left-10`}  alt="" />
         </div>
     );
 };
