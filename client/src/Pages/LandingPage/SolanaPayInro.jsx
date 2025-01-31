@@ -23,15 +23,15 @@ const SolanaPayInro = () => {
             x : 140
         })
     
-        gsap.from(".abcimg", {
-            y : -220,
-            scrollTrigger: {
-                trigger: ".solanaLogo1_par",
-                start: "top -30%",
-                end : "top -130%",
-                scrub: 1,
-            }
-        })   
+        // gsap.from(".abcimg", {
+        //     y : -220,
+        //     scrollTrigger: {
+        //         trigger: ".solanaLogo1_par",
+        //         start: "top -30%",
+        //         end : "top -130%",
+        //         scrub: 1,
+        //     }
+        // })   
     })
 
     const endpoint = import.meta.env.VITE_CRYPTO_ENDPOINT;
@@ -39,16 +39,16 @@ const SolanaPayInro = () => {
     return (
         <div className="relative solanaLogo1_par flex h-screen w-screen">
             <div className="flex absolute -left-8 md:-left-10 justify-center items-center  h-screen w-screen">
-                <div className='h-screen absolute -left-8 md:-left-10 top-0  w-screen'>
-                    <div className="w-3  abcimg h-3 absolute top-0 left-20 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-8 abcimg h-8 absolute bottom-36 left-40 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-8 abcimg h-8 absolute top-8 right-10 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-6 abcimg h-6 absolute top-44 left-[40%] -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-8  abcimg h-8 absolute top-72 right-56 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-12 abcimg h-12 absolute top-40 right-96 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-12 abcimg h-12 absolute top-0 left-1/2 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-10 abcimg h-10 absolute top-20 left-72 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
-                    <div className="w-10 abcimg h-10 absolute bottom-[-2rem] left-72 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full transition-transform duration-500 ease-out translate-y-0 opacity-100"></div>
+                <div data-scroll-container className='h-screen absolute -left-8 md:-left-10 top-0  w-screen'>
+                    <div data-scroll data-scroll-speed={0.2} className="w-3  abcimg h-3 absolute -top-10 left-20 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full  opacity-100"></div>
+                    <div data-scroll data-scroll-speed={0.2} className="w-8 abcimg h-8 absolute bottom-36 left-40 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
+                    <div data-scroll data-scroll-speed={-0.2} className="w-8 abcimg h-8 absolute -top-28 right-10 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full  opacity-100"></div>
+                    <div data-scroll data-scroll-speed={0.2} className="w-6 abcimg h-6 absolute top-44 left-[40%] -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
+                    <div data-scroll data-scroll-speed={-0.2} className="w-8  abcimg h-8 absolute top-72 right-56 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
+                    <div data-scroll data-scroll-speed={0.2} className="w-12 abcimg h-12 absolute top-40 right-96 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
+                    <div data-scroll data-scroll-speed={-0.2} className="w-12 abcimg h-12 absolute -top-10 left-1/2 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full y-0 opacity-100"></div>
+                    <div data-scroll data-scroll-speed={0.2} className="w-10 abcimg h-10 absolute top-20 left-72 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full  opacity-100"></div>
+                    <div data-scroll data-scroll-speed={0.2} className="w-10 abcimg h-10 absolute bottom-[-2rem] left-72 -ml-1.5 mt-52 bg-gradient-to-b from-[#B9AEDF] to-[#1A1A32] rounded-full opacity-100"></div>
                 </div>
                 <div className='relative backdrop-blur-sm w-screen flex justify-center items-center '>
                     <img className='w-[40rem] sm:h-[20rem] max-sm:w-[16rem] solanaLogo1' src="/solanaLogo1.svg" alt="" />
