@@ -10,7 +10,7 @@ import {
 import { foodModel } from "./models/food.model.js";
 import { userModel } from "./models/user.model.js";
 
-const MONGO_URI = 'mongodb://localhost:27017/foodybro';
+const MONGO_URI = 'mongodb://mongo:27017/foodybro';
 
 async function seedDB() {
   try {
