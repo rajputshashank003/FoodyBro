@@ -86,6 +86,7 @@ export const sample_foods = [
       password: '12345',
       address: 'Toronto On',
       isAdmin: false,
+      phone : 9898989898
     },
     {
       id: 2,
@@ -94,14 +95,7 @@ export const sample_foods = [
       password: '12345',
       address: 'Shanghai',
       isAdmin: true,
+      phone : 9898989898
     },
-    {
-      id:3,
-      name : "abc",
-      email : "abc@gmail.com",
-      password :"1111",
-      address : "haryana",
-      isAdmin : false,
-    }
   ];
   

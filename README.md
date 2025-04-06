@@ -14,7 +14,8 @@ A comprehensive food ordering application built using the MERN stack. The app al
     - [Backend](#backend)
     - [Other Tools and Services](#other-tools-and-services)
   - [Setup and Installation](#setup-and-installation)
-    - [Prerequisites](#prerequisites)
+    - [Docker setup](#docker-setup)
+    - [Prerequisites for manual setup](#prerequisites)
     - [Installation](#installation)
   - [Contributing](#contributing)
   - [Contact](#contact)
@@ -68,7 +69,22 @@ Try out the live demo of the app hosted on Render.com:
 
 ## Setup and Installation
 
-### Prerequisites
+### Docker setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/rajputshashank003/FoodyBro
+   cd FoodyBro
+2. **Run the setup script (first time only)**
+    ```bash
+    ./setup.sh
+3. **Next time when restarting**
+    ```bash
+    docker compose up -d
+    cd client
+    npm run dev
+
+### Prerequisites of manual setup
 
 Ensure you have the following installed on your system:
 
