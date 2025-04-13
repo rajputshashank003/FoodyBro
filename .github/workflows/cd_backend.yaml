@@ -24,3 +24,6 @@ jobs:
           tags: |
             rajputshashank/foodybro-backend:latest
             rajputshashank/foodybro-backend:${{ github.sha }}
+
+      - name: Trigger redeploy on Render
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
