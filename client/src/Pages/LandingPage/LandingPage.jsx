@@ -5,6 +5,7 @@ import MotionCard  from './MotionCard';
 import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTriggerFoods';
 import LocomotiveScroll from "locomotive-scroll";
 import { useMotionValue } from 'framer-motion';
+import { motion } from "motion/react";
 import gsap from 'gsap';
 import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
@@ -159,9 +160,14 @@ function LandingPage() {
                 </div>
       
                 <div className="flex items-center justify-between gap-3 mt-6 text-lg">
-                  <div onClick={() => navigate("/home")} className="cursor-pointer hover:underline">
+                  <motion.div 
+                    initial={{}}
+                    animate={{ scale : [1, 1.18, 1]}}
+                    transition={{duration : 2, ease : "easeInOut", repeat : Infinity}}
+                    onClick={() => navigate("/home")} className="cursor-pointer duration-300 hover:underline"
+                  >
                     ORDER <span className='text-[#D32F2F] font-bold'>NOW</span>
-                  </div>
+                  </motion.div>
                   <div onMouseMove={handleMouseMouseName} onMouseLeave={handleMouseLeaveName} onClick={handleScrollToPage3} className='text-xl cursor-pointer solanaLogoLandingPage relative text-black font-bold'>
                     <img className='w-[10rem]' src="/solanaLogo1.svg" alt="" /> 
                     <div className='absolute left-[3.2rem] top-[60%]'>
