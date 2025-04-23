@@ -11,7 +11,6 @@ import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
 import SolanaPayInro from './SolanaPayInro';
 import { useGSAP } from '@gsap/react';
-import AnimatedText from '../../components/AnimatedText/AnimatedText';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
