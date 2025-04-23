@@ -8,6 +8,40 @@ import admin from '../middleware/admin.mid.js';
 import { userModel } from "../models/user.model.js";
 
 const router = Router();
+let StoredFoodData ;
+let personalized_food_data = {} ;
+
+const update_catched_food_data = async () => {
+  const allFoods = await foodModel.find({});
+  StoredFoodData = allFoods;
+  personalized_food_data = {};
+}
+
+const update_catched_personalized_food_data = async (userId, allFoods) => {
+  const recommendedItems = await getRecommendations(userId);
+
+  let sortedFoods = [];
+  const notRecommendedFoods = [];
+  recommendedItems.forEach((item) => {
+      const foodsWithItem = allFoods.filter((food) =>
+          food.name.toLowerCase().includes(item.toLowerCase())
+      );
+      sortedFoods.push(...foodsWithItem);
+  });
+  allFoods.forEach((food) => {
+      if (
+          !recommendedItems.some((item) =>
+              food.name.toLowerCase().includes(item.toLowerCase())
+          )
+      ) {
+          notRecommendedFoods.push(food);
+      }
+  });
+  sortedFoods.push(...notRecommendedFoods);
+  sortedFoods = removeDuplicatesById(sortedFoods);
+
+  personalized_food_data[userId] = sortedFoods;
+}
 
 const removeDuplicatesById = (foods) => {
   const seen = new Set();
@@ -21,36 +55,29 @@ const removeDuplicatesById = (foods) => {
 router.get("/", async (req, res) => {
   try {
       const userId = req.query.id; 
-      const allFoods = await foodModel.find({});
 
-      if (!userId) {
-          return res.send(allFoods);
+      if(!userId && StoredFoodData) {
+        return res.send(StoredFoodData);
+      } 
+      if(userId == 'undefined' || userId == 'null'){
+        return res.send(StoredFoodData);
       }
-      const recommendedItems = await getRecommendations(userId);
-
-      let sortedFoods = [];
-      const notRecommendedFoods = [];
-      recommendedItems.forEach((item) => {
-          const foodsWithItem = allFoods.filter((food) =>
-              food.name.toLowerCase().includes(item.toLowerCase())
-          );
-          sortedFoods.push(...foodsWithItem);
-      });
-      allFoods.forEach((food) => {
-          if (
-              !recommendedItems.some((item) =>
-                  food.name.toLowerCase().includes(item.toLowerCase())
-              )
-          ) {
-              notRecommendedFoods.push(food);
-          }
-      });
-      sortedFoods.push(...notRecommendedFoods);
-      sortedFoods = removeDuplicatesById(sortedFoods);
-      res.send(sortedFoods);
+      
+      if(!StoredFoodData) {
+        await update_catched_food_data();
+      }
+      const allFoods = StoredFoodData;
+      if (!userId) {
+        return res.send(allFoods);
+      }
+      if(personalized_food_data[userId]) {
+        return res.send(personalized_food_data[userId]);
+      }
+      await update_catched_personalized_food_data(userId, allFoods);
+      return res.send(personalized_food_data[userId]);
   } catch (error) {
       console.error("Error fetching food data:", error);
-      res.status(500).send({ error: "Error fetching food data." });
+      return res.status(500).send({ error: "Error fetching food data." });
   }
 });
 
@@ -122,6 +149,7 @@ router.post("/review", handler (async (req, res) => {
     },
     {new : true}
   );
+  await update_catched_food_data();
   res.status(200).json({
     success : true,
     message : "Upload Success",
@@ -149,6 +177,7 @@ router.delete("/review", handler (async (req, res) => {
     },
     {new : true}
   );
+  await update_catched_food_data();
   res.status(200).json({
     success : true,
     message : "Data fetched success",
@@ -167,12 +196,10 @@ router.get("/reviews/:id", handler (async (req, res) => {
   });
 }));
 
-router.post(
-  '/',
+router.post('/',
   admin,
   handler(async (req, res) => {
-    const { name, price, tags, favorite, imageUrl, origins, cookTime } =
-      req.body;
+    const { name, price, tags, favorite, imageUrl, origins, cookTime } = req.body;
     const food = new foodModel({
       name,
       price,
@@ -184,14 +211,13 @@ router.post(
     });
 
     await food.save();
-
+    await update_catched_food_data();
     res.send(food);
   })
 );
 
 
-router.put(
-  '/',
+router.put('/',
   admin,
   handler(async (req, res) => {
     const { id, name, price, tags, favorite, imageUrl, origins, cookTime } =
@@ -209,16 +235,16 @@ router.put(
         cookTime,
       }
     );
-
+    await update_catched_food_data();
     res.send();
   })
 );
-router.delete(
-  '/:foodId',
+router.delete('/:foodId',
   admin,
   handler(async (req, res) => {
     const { foodId } = req.params;
     await foodModel.deleteOne({ _id: foodId });
+    await update_catched_food_data();
     res.send();
   })
 );
@@ -239,6 +265,8 @@ router.post('/saveSearch', async (req, res) => {
       const oldestSearch = await SearchHistory.findOneAndDelete({ userId: id }, { sort: { timestamp: 1 } });
     }
     await newSearch.save();
+    await update_catched_personalized_food_data(id , StoredFoodData);
+
     res.status(201).json({ message: 'Search saved' });
   } catch (error) {
     res.status(500).json({ error: 'Error saving search' });
@@ -249,6 +277,8 @@ router.post('/removeSearch', async (req, res) => {
   const { id, term } = req.body;
   try {
     await SearchHistory.findOneAndDelete({usrId : id , searchTerm : term});
+    await update_catched_personalized_food_data(id , StoredFoodData);
+
     res.status(201).json({ message: 'Search removed' });
   } catch (error) {
     res.status(500).json({ error: 'Error removing search' });

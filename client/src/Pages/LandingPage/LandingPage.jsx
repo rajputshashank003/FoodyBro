@@ -11,6 +11,7 @@ import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
 import SolanaPayInro from './SolanaPayInro';
 import { useGSAP } from '@gsap/react';
+import AnimatedText from '../../components/AnimatedText/AnimatedText';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -136,14 +137,14 @@ function LandingPage() {
               <div className="max-md:w-[90%] ">
                 <div className="text-4xl z-[99] md:text-7xl pb-4 font-black bg-gradient-to-b from-[#D32F2F] to-[#e3acac] text-transparent bg-clip-text tracking-tighter">
                     <span className='text-2xl hover:underline md:text-4xl'>Play on </span> 
-                    <a
+                    <Link
                       onMouseMove={handleMouseMotionInChessV_title}
                       onMouseLeave={handleMouseMotionInChessV_titleLeave}
-                      className=' hover:underline ChessV_title' 
-                      href='https://chessv.netlify.app'
+                      className=' hover:underline ChessV_title overflow-hidden' 
+                      to='https://chessv.netlify.app'
                     > 
-                        ChessV 
-                    </a>
+                      ChessV
+                    </Link>
                     <span className='text-2xl md:text-4xl'> to Compete, <br />Order on </span>
                     <span onClick={( ) => navigate("/home")} className='cursor-pointer'> 
                     <span

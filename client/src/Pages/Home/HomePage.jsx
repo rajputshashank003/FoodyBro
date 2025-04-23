@@ -35,7 +35,7 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const userId = getUser() ? getUser().id : "";
-
+        
         const responseTag = await getAllTags(userId);
         setSampleTags(responseTag.data);
         
