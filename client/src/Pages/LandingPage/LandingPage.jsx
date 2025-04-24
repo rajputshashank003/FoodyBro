@@ -32,6 +32,9 @@ function LandingPage() {
 
     useEffect(() => {
       const locomotiveScroll = new LocomotiveScroll();
+      return () => {
+        locomotiveScroll.destroy();
+      }
     },[]);
 
     const mouseX = useMotionValue(0);
