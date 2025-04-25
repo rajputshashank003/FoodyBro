@@ -12,6 +12,9 @@ const useScrollUtils = () => {
     const [img1Hovered , setImg1Hovered] = useState(false);
 
     const handleMouseEnter1 = (e, ind) => {
+        if(dimensions.width < 600 ) {
+            return ;
+        }
         setImg1Hovered(true);
         mouseX.set(e.clientX);
         mouseY.set(e.clientY);
@@ -34,6 +37,9 @@ const useScrollUtils = () => {
 
     }
     const handleMouseLeave1 = (e, ind) => {
+        if(dimensions.width < 600 ) {
+            return ;
+        }
         setImg1Hovered(false);
         gsap.to(".mousePointer",{
             height : "0.7rem",
@@ -54,6 +60,9 @@ const useScrollUtils = () => {
     }
 
     const handleMouseMouseName = () => {
+        if(dimensions.width < 600 ) {
+            return ;
+        }
         gsap.set(".mousePointer", {
             zIndex: 0,
         });
@@ -65,6 +74,9 @@ const useScrollUtils = () => {
     }
 
     const handleMouseLeaveName = () => {
+        if(dimensions.width < 600 ) {
+            return ;
+        }
         gsap.to(".mousePointer",{
             height : "0.7rem",
             width : "0.7rem",
@@ -74,6 +86,9 @@ const useScrollUtils = () => {
     }
 
     useGSAP(() => {
+        if(dimensions.width < 600 ) {
+            return ;
+        }
         gsap.to(".stfm1", {
             scrollTrigger: {
                 trigger: ".ScrollTriggerFoods_main",

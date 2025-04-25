@@ -11,6 +11,7 @@ import GlslImage1 from '../../components/GlslImage1/GlslImage1';
 import LandingVideoAnimation from '../../components/LandingVideoAnimation.jsx/LandingVideoAnimation';
 import SolanaPayInro from './SolanaPayInro';
 import { useGSAP } from '@gsap/react';
+import useDimensions from '../../components/Hooks/useDimensions';
 
 function LandingPage() {
     const [fontSize, setFontSize] = useState('0.5rem');
@@ -114,6 +115,7 @@ function LandingPage() {
             zIndex : "999999"
         })
     }
+    let dimensions = useDimensions();
 
 
     return (
@@ -186,7 +188,7 @@ function LandingPage() {
                 <ScrollTriggerFoods stfm4={stfm4}/>
               </div>
               <div className='relative h-fit'>
-                <LandingVideoAnimation/>
+                <LandingVideoAnimation key={dimensions.width + " - " + dimensions.height} />
               </div>
               <div className='relative h-screen' ref={page4Ref}>
                 <SolanaPayInro/>
