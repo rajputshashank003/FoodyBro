@@ -167,11 +167,11 @@ function LandingPage() {
                 <div className="flex items-center justify-between gap-3 mt-6 text-lg">
                   <motion.div 
                     initial={{}}
-                    animate={{ scale : [1, 1.18, 1]}}
+                    animate={{ scale : [1, 1.3, 1]}}
                     transition={{duration : 2, ease : "easeInOut", repeat : Infinity}}
                     onClick={() => navigate("/home")} className="cursor-pointer duration-300 hover:underline"
                   >
-                    ORDER <span className='text-[#D32F2F] font-bold'>NOW</span>
+                    ORDER <span className='text-[#D32F2F] duration-300 font-bold'>NOW</span>
                   </motion.div>
                   <div onMouseMove={handleMouseMouseName} onMouseLeave={handleMouseLeaveName} onClick={handleScrollToPage3} className='text-xl cursor-pointer solanaLogoLandingPage relative text-black font-bold'>
                     <img className='w-[10rem]' src="/solanaLogo1.svg" alt="" /> 

@@ -90,6 +90,22 @@ export default function PrimarySearchAppBar() {
 
   const {user , logout} = useAuth();
 
+  const [search_placeholder, set_search_placeholder] = useState("AI Search...");
+  const [fade_placeholder, set_fade_placeholder] = useState(false);
+  useEffect(() => {
+    const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "spicy food","street food"];
+    let ind = 0;
+    const interval = setInterval(() => {
+      set_fade_placeholder(true); 
+      setTimeout(() => {
+        ind = (ind + 1) % values.length;
+        set_search_placeholder(values[ind]);
+        set_fade_placeholder(false); 
+      }, 1000);
+    }, 3000); 
+    return () => clearInterval(interval);
+  }, []);
+
   // preDefined style functions 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -243,7 +259,7 @@ export default function PrimarySearchAppBar() {
               />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder={search_placeholder}
               inputProps={{ 'aria-label': 'search' }}
               onChange={e => setTerm(e.target.value)}
               onKeyUp={e => e.key === 'Enter' && search()}
@@ -257,7 +273,9 @@ export default function PrimarySearchAppBar() {
                   width: '100%', 
                   padding: "0px",
                   margin:"0px"
-                }
+                },
+                opacity: fade_placeholder ? 0 : 1, // Animate opacity using sx
+                transition: "opacity 1.2s linear",
               }} 
             />
           </Search>
