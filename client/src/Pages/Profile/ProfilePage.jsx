@@ -7,6 +7,7 @@ import { useAuth } from "../../components/Hooks/useAuth";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
 import * as userService from "../../Services/userService.js";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 export default function ProfilePage () {
     const {user , updateProfile} = useAuth();
@@ -16,7 +17,7 @@ export default function ProfilePage () {
         password: '',
         confirmPassword: '',
         address: '',
-        phone : undefined,
+        phone : '',
     });
 
     const handleSubmit = (e) => {
@@ -42,53 +43,75 @@ export default function ProfilePage () {
     return (
         <>
             <div className={classes.main}>
-                <form className={classes.details} onSubmit={handleSubmit} >
-                    <span className={classes.mapHead}>Update Profile</span>
-                    <TextField
-                        sx={{ height: "5rem", width: "100%" }}
-                        name='email'
-                        label="E-mail"
-                        type='text'
-                        variant="outlined"
-                        defaultValue={user.email}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
-                    <TextField
-                        sx={{ height: "5rem", width: "100%" }}
-                        name='name'
-                        label="Name"
-                        type='text'
-                        variant="outlined"
-                        defaultValue={user.name}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        sx={{ height: "5rem", width: "20.5rem" }}
-                        name='address'
-                        label="Address"
-                        type='text'
-                        variant="outlined"
-                        defaultValue={user.address}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        sx={{ height: "5rem", width: "20.5rem" }}
-                        name='phone'
-                        label="Phone no."
-                        type='number'
-                        variant="outlined"
-                        defaultValue={user.phone}
-                        onChange={handleChange}
-                    />
+                <div 
+                    style={{
+                        backgroundImage: `url('/food_bg_profile.jpg')`,
+                        backgroundSize: 'cover', 
+                    }} 
+                    className="h-fit w-[20rem] md:w-[40rem] duration-300 overflow-hidden shadow-[0px_0px_8px] my-4 mb-6 shadow-black/40 rounded-3xl "
+                >
+                    <div className=" h-full py-8 relative px-8 w-full backdrop-blur-[2px] bg-black/10">
+                        <div className="relative flex text-center justify-center items-center mb-4 font-semibold text-3xl  border-black">
+                            Here’s Your Space to Shine!
+                        </div>
+                        <div className="relative flex text-center justify-center items-center my-4 font-semibold text-gray-800/50 text-sm  border-black">
+                            Personalize and Customize Your Experience.
+                        </div>
+                        <form className="w-full flex justify-center items-center flex-col" onSubmit={handleSubmit} >
+                            <Form_Title 
+                                name='email'
+                                label="E-mail"
+                                type='text'
+                                variant="outlined"
+                                formData={formData}
+                                onChange={handleChange}
+                                readOnly={true}
+                            />
+                            <Form_Title 
+                                name='name'
+                                label="Name"
+                                type='text'
+                                variant="outlined"
+                                formData={formData}
+                                onChange={handleChange}
+                                readOnly={false}
+                            />
+                            <Form_Title 
+                                name='phone'
+                                label="Phone No."
+                                type='text'
+                                variant="outlined"
+                                formData={formData}
+                                onChange={handleChange}
+                                readOnly={false}
+                            />
+                            <Form_Title 
+                                name='address'
+                                label="Address"
+                                type='text'
+                                variant="outlined"
+                                formData={formData}
+                                onChange={handleChange}
+                                readOnly={false}
+                            />
+                            <motion.button 
+                                whileTap={{
+                                    scale : 0.7
+                                }}
+                                type="submit" className="bg-[#D32F2F] duration-300  text-2xl mt-2 p-2 rounded-xl flex justify-center items-center text-neutral-200"
+                            >
+                                Submit
+                            </motion.button>
+                        </form>
+                    </div>
+                </div>
+                <form className={classes.details} >
                     {
                         user.is_verified &&
                         <Alert 
                             severity="success"
                             sx={{
-                                marginBottom: "6%",
-                                width : "90%",
+                                width : "100%",
                             }}
                         >
                             Email Verified
@@ -102,7 +125,6 @@ export default function ProfilePage () {
                                 variant="outlined" 
                                 severity="error" 
                                 sx={{
-                                    marginBottom: "4%",
                                     cursor: "pointer",
                                     width: "100%",
                                     color: "red",
@@ -113,25 +135,25 @@ export default function ProfilePage () {
                         </div>
     
                     }
-                    <Button 
-                        type="submit" 
-                        variant='contained' 
-                        sx={{
-                            bgcolor:"#04AF70", 
-                            width:"50%", 
-                            height:"3rem", 
-                            fontSize:"1.2rem",
-                            marginLeft : "20%",
-                            '&:hover': {
-                                bgcolor: "#027148"
-                            }
-                        }} >
-                            Update
-                    </Button>
-                    
                 </form>
                 <ChangePassword/>
             </div>
         </>
     );
 }
+
+const Form_Title = (props) => {
+    return (
+        <div className="relative w-full text-sm mb-2 font-bold text-slate-800">
+            {props.label}
+            <input 
+                name={props.name}
+                type={props.type} 
+                onChange={(e) => props.onChange(e)} 
+                className="h-fit p-2 mt-1 w-full font-normal focus:outline-none border rounded-lg" 
+                value={props.formData[props.name]} 
+                readOnly={props.readOnly}
+            />
+        </div>
+    )
+} 
