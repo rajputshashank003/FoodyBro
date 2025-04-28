@@ -63,10 +63,11 @@ export default function HomePage() {
     toast.success(data.msg);
   }
   const load_next_6_foods = async (ind) => {
-    if(ind <= sample_foods.length - 2) {
+    if(ind <= sample_foods.length - 2 || searchTerm || tag) {
       return ;
     }
-    let next_5 = await getAll(user.id, sample_foods.length);
+    const userId = getUser() ? getUser().id : "";
+    let next_5 = await getAll(userId , sample_foods.length);
     // console.log("finding next 6", next_6);
     setSampleFoods((prev) => {
       return [...prev , ...next_5.data]
@@ -108,7 +109,7 @@ export default function HomePage() {
             <div className={classes.main}>
               {
                 sample_foods.map( (food, ind) => (
-                  <Thumbnail ind={ind} load_next_6_foods={load_next_6_foods} key={food.id} food={food}/>
+                  <Thumbnail ind={ind} load_next_6_foods={load_next_6_foods} key={food._id + "" + ind} food={food}/>
                 ))
               }
             </div>  
