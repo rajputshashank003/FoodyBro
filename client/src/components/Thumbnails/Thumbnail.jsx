@@ -20,8 +20,9 @@ import { useEffect } from 'react';
 import * as userService from "../../Services/userService.js"
 import { addToFavourites, isFavourite, removeFromFavourites, saveSearchTerm ,removeSearchTerm} from '../../Services/services.js';
 import { toast } from 'react-toastify';
+import { motion } from "framer-motion";
 
-export default function MediaCard({food}) {
+export default function MediaCard({food, load_next_6_foods, ind}) {
     const defaultImage = "/foods/";
     const {addToCart } = useCart();
     const handleAddToCart = () => {
@@ -58,8 +59,12 @@ export default function MediaCard({food}) {
         setFavouriteFood((prev) => !prev);
       }
     }
+    
   return (
-    <div className={classes.main} >
+    <motion.div 
+      onViewportEnter={() => load_next_6_foods(ind) }
+      className={classes.main} 
+    >
     <Card sx={{ maxWidth: 345 }}>
       <Link to={`/food/${food.id}`} style={{textDecoration:"none", }}>
       <CardMedia
@@ -98,6 +103,6 @@ export default function MediaCard({food}) {
           <Button variant="contained" sx={{bgcolor:"#D32F2F", marginTop:"1rem"}} onClick={handleAddToCart}><AddShoppingCartIcon /></Button>
       </CardContent>
     </Card>
-    </div>
+    </motion.div>
   );
 }

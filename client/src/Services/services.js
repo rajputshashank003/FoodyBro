@@ -2,8 +2,11 @@ import axios from "axios";
 
 let food_details_fetch_count = 0;
 
-export const getAll = async (id) => {
+export const getAll = async (id, length) => {
     let response;
+    if(!length) {
+        length = 0;
+    }
     try {
         if(localStorage.getItem("food_details")) {
             food_details_fetch_count++;
@@ -26,6 +29,8 @@ export const getAll = async (id) => {
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+    // console.log('response ');
+    response.data = response.data.slice(length , length + 5);
     return response;
 }
 
