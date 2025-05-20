@@ -279,6 +279,7 @@ export default function PrimarySearchAppBar() {
                   padding: "0px",
                   margin:"0px"
                 },
+                fontWeight: 800,
                 opacity: fade_placeholder && term?.length == 0 ? 0 : 1, // Animate opacity using sx
                 transition: "opacity 1.2s linear",
               }} 
@@ -332,7 +333,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             }
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none'} }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none', zIndex: '99999999'} }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -346,7 +347,7 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-    <Menu_v2 user={user} menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
+      <Menu_v2 totalCount={totalCount} menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
       {/* {renderMobileMenu} */}
       {renderMenu}
     </Box>
