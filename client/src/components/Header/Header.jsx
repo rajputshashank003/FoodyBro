@@ -66,6 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 import axios from 'axios';
+import Menu_v2 from './Menu_v2.jsx';
 
 export default function PrimarySearchAppBar() {
 // userDefined Functions 
@@ -74,6 +75,17 @@ export default function PrimarySearchAppBar() {
   const { searchTerm } = useParams();
   const {cart} = useCart();
   const totalCount = cart.totalCount;
+
+  const {user , logout} = useAuth();
+  const [search_placeholder, set_search_placeholder] = useState("AI Search...");
+  const [fade_placeholder, set_fade_placeholder] = useState(false);
+  
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [ menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setTerm(searchTerm ?? '');
@@ -88,10 +100,6 @@ export default function PrimarySearchAppBar() {
     term ? navigate("/search/" + term) : navigate("/");
   };
 
-  const {user , logout} = useAuth();
-
-  const [search_placeholder, set_search_placeholder] = useState("AI Search...");
-  const [fade_placeholder, set_fade_placeholder] = useState(false);
   useEffect(() => {
     const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "spicy food","street food"];
     let ind = 0;
@@ -107,11 +115,7 @@ export default function PrimarySearchAppBar() {
   }, []);
 
   // preDefined style functions 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -127,6 +131,7 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleMobileMenuOpen = (event) => {
+    setMenuOpen(true);
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -231,9 +236,9 @@ export default function PrimarySearchAppBar() {
 
 
   return (
-    <div className={classes.mainDiv} style={{borderRadius:"0.5rem", overflow:"hidden"}}>
-    <Box sx={{ flexGrow: 1}} >
-      <AppBar position="static" sx={{bgcolor:"error.main"}}>
+    <div className={classes.mainDiv} >
+    <Box sx={{ flexGrow: 1, position: 'relative'}} >
+      <AppBar position="static" sx={{bgcolor:"error.main", borderRadius: "12px"}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -274,7 +279,7 @@ export default function PrimarySearchAppBar() {
                   padding: "0px",
                   margin:"0px"
                 },
-                opacity: fade_placeholder ? 0 : 1, // Animate opacity using sx
+                opacity: fade_placeholder && term?.length == 0 ? 0 : 1, // Animate opacity using sx
                 transition: "opacity 1.2s linear",
               }} 
             />
@@ -327,13 +332,13 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             }
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none'} }}>
             <IconButton
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              onClick={() => setMenuOpen( prev => !prev )}
               color="inherit"
             >
               <MoreIcon />
@@ -341,7 +346,8 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+    <Menu_v2 user={user} menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
+      {/* {renderMobileMenu} */}
       {renderMenu}
     </Box>
     </div>

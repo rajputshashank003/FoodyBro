@@ -15,7 +15,6 @@
     flex-direction: row;
     width : "100%";
     overflow : scroll;
-    border : "10px solid black";
     margin : "20rem";
 }
 
