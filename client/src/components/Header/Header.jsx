@@ -236,7 +236,7 @@ export default function PrimarySearchAppBar() {
 
 
   return (
-    <div className={classes.mainDiv} >
+    <div className="mx-2 sm:my-2" >
     <Box sx={{ flexGrow: 1, position: 'relative'}} >
       <AppBar position="static" sx={{bgcolor:"error.main", borderRadius: "12px"}}>
         <Toolbar>
