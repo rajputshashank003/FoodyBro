@@ -2,7 +2,7 @@ import axios from "axios";
 
 let food_details_fetch_count = 0;
 
-export const getAll = async (id, length) => {
+export const getAll = async (id, length, page_name) => {
     let response;
     if(!length) {
         length = 0;
@@ -13,7 +13,7 @@ export const getAll = async (id, length) => {
             // console.log("fetched from local...", food_details_fetch_count);
             response = (JSON.parse(localStorage.getItem("food_details"))).food_details;
         }
-        if(food_details_fetch_count > 3 || !response) {
+        if(food_details_fetch_count > 3 || !response || response?.data?.length == 0 ) {
             response = await axios.get(`/api/foods` + (id ? "?id=" + id : "") );
             localStorage.setItem(
                 "food_details",
@@ -30,6 +30,9 @@ export const getAll = async (id, length) => {
         console.error('Error fetching data:', error);
     }
     // console.log('response ');
+    if ( page_name === 'admin_page' ) {
+        return response;
+    }
     response.data = response.data.slice(length , length + 5);
     return response;
 }
