@@ -318,7 +318,7 @@ router.post('/saveSearch', async (req, res) => {
 
     res.status(201).json({ message: 'Search saved' });
   } catch (error) {
-    res.status(500).json({ error: 'Error saving search' });
+    res.status(500).json({ error: 'Error saving search' + error.message });
   }
 });
 
