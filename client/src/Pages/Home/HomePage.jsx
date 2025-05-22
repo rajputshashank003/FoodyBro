@@ -4,7 +4,7 @@ import classes from "./HomePage.module.css";
 import { useNavigate, useParams } from 'react-router-dom';
 import Tags from '../../components/Tags/Tags.jsx';
 import NotFound from '../../components/NotFound/NotFound.jsx';
-import { getAll , getAllTags ,searchFood , getAllByTag} from '../../Services/services.js';
+import { getAll , getAllTags ,searchFood , getAllByTag, saveSearchTerm} from '../../Services/services.js';
 import {verifyToken, getUser} from "../../Services/userService.js";
 import { useAuth } from "../../components/Hooks/useAuth";
 import Alert from '@mui/material/Alert';
@@ -44,6 +44,7 @@ export default function HomePage() {
           responseFood = await getAllByTag(tag, userId);
         } else if (searchTerm) {
           responseFood = await searchFood(searchTerm);
+          await saveSearchTerm( user?.id , searchTerm );
         } else {
           responseFood = await getAll(userId);
         }
@@ -106,7 +107,7 @@ export default function HomePage() {
           (!sample_foods || sample_foods.length === 0) ?
             <NotFound message="Reset Search"/>
             :
-            <div className={classes.main}>
+            <div className={classes.main + " px-2"}>
               {
                 sample_foods.map( (food, ind) => (
                   <Thumbnail ind={ind} load_next_6_foods={load_next_6_foods} key={food._id + "" + ind} food={food}/>
