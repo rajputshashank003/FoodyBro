@@ -1,12 +1,10 @@
 .container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
   margin-bottom: 10rem;
 }
 
 .list {
-  margin: 1rem;
   max-width: 70rem;
 }
 
@@ -15,7 +13,6 @@ a.add_food {
   background: darkred;
   color: white;
   padding: 0.7rem;
-  margin: 0.8rem 0;
   border-radius: 1.5rem;
 }
 

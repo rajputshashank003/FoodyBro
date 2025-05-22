@@ -17,8 +17,13 @@ export default function FoodsAdminPage() {
     loadFoods();
   }, [searchTerm]);
 
+  useEffect(() => {
+    loadFoods();
+  }, []);
+
   const loadFoods = async () => {
-    const foods = searchTerm ? await searchFood(searchTerm) : await getAll(getUser().id ?? "");
+    // optimise it like on home page using while in view from framer motion --------------------//
+    const foods = searchTerm ? await searchFood(searchTerm) : await getAll(getUser().id ?? "",0, 'admin_page');
     setFoods(foods.data);
   };
 
@@ -32,6 +37,25 @@ export default function FoodsAdminPage() {
     );
   };
 
+  const get_good_food_name = ( food_name ) => {
+    if( food_name.length <= 15) {
+      return <>{food_name}</>
+    }
+    return (
+      <>
+        {
+          food_name.split("").map((char, idx) => {
+            if ( idx > 15 ) {
+              return null;
+            } 
+            return <span key={idx} > {char} </span>
+          })
+        }
+        ...
+      </>
+    )
+  }
+
   const deleteFood = async food => {
     const confirmed = window.confirm(`Delete Food ${food.name}?`);
     if (!confirmed) return;
@@ -44,18 +68,40 @@ export default function FoodsAdminPage() {
   return (
     <div className={classes.container}>
       <div className={classes.list}>
-        <Title title="Manage Foods" margin="1rem auto" />
+        <div className="title text-[40px] font-bold text-red-500 w-screen flex justify-center m-0 items-center">
+          Manage Foods
+        </div>
         <Search
           searchRoute="/admin/foods/"
           defaultRoute="/admin/foods"
-          margin="1rem 0"
-          placeholder="Search Foods"
+          margin="0 0 0 0"
+          placeholder="Search Admin Foods"
         />
-        <Link to="/admin/addFood" className={classes.add_food}>
+        <FoodsNotFound />
+        <Link to="/admin/addFood" className={classes.add_food + " mx-4 my-2"}>
           Add Food +
         </Link>
-        <FoodsNotFound />
-        {foods &&
+        <div className='flex flex-col duration-300 md:flex-row md:flex-wrap gap-2 justify-center items-center'>
+          {foods &&
+            foods.map(food => (
+              <div key={food.id} className='flex p-2 hover:shadow-[0px_0px_4px] duration-200 shadow-black flex-row w-[340px] sm:w-[400px] justify-center items-center bg-gray-100 rounded-[10px]'>
+                <Link className={"text-[20px] sm:gap-4 m-0 flex flex-row w-full justify-start items-center"} to={'/food/' + food.id}>
+                  <img src={food.imageUrl} className='h-[80px] hover:z-[99] hover:scale-[2.5] duration-300 object-cover w-[30%] rounded-[12px]' alt={food.name} />
+                  <div className="flex flex-col sm:gap-2 w-[70%] relative ">
+                    <div className='flex flex-row h-[35px] justify-between w-full  items-center'>
+                      <div className='gap-0 flex flex-row'>{ get_good_food_name(food.name) }</div>
+                      <Price price={food.price} />
+                    </div>
+                    <div className="links h-[35px] w-full flex flex-row gap-2 ">
+                      <Link className='m-0 hover:shadow-[0px_0px_4px] shadow-black duration-200 bg-gray-300 p-1 rounded-[5px] px-2' to={'/admin/editFood/' + food.id}>Edit</Link>
+                      <Link className='m-0 hover:shadow-[0px_0px_4px] shadow-black duration-200 bg-gray-300 p-1 rounded-[5px] px-2' onClick={() => deleteFood(food)}>Delete</Link>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+        </div>
+        {/* {foods &&
           foods.map(food => (
             <div key={food.id} className={classes.list_item}>
               <img src={food.imageUrl} alt={food.name} />
@@ -66,7 +112,7 @@ export default function FoodsAdminPage() {
                 <Link onClick={() => deleteFood(food)}>Delete</Link>
               </div>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );
