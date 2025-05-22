@@ -25,6 +25,11 @@ const ScrollTriggerFoods = ({stfm4}) => {
             setFoodData(data.slice(0,5))
         }
         fetchData();
+        const locomotiveScroll = new LocomotiveScroll();
+
+        return () => {
+            locomotiveScroll.destroy();
+        }
     } , []);
     
     const navigate = useNavigate();
