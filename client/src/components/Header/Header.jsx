@@ -92,16 +92,11 @@ export default function PrimarySearchAppBar() {
   }, [searchTerm]);
 
   const search = async () => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    if(userData && userData.id){
-      const id = userData.id;
-      const result = await axios.post("/api/foods/saveSearch", {id , term});
-    }
     term ? navigate("/search/" + term) : navigate("/");
   };
 
   useEffect(() => {
-    const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "spicy food","street food"];
+    const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "Barish me kuch kahan hai","Street food"];
     let ind = 0;
     const interval = setInterval(() => {
       set_fade_placeholder(true); 
