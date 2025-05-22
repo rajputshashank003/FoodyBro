@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import MotionCard  from './MotionCard';
 import ScrollTriggerFoods from '../../components/ScrollTriggerFoods/ScrollTriggerFoods';
-import LocomotiveScroll from "locomotive-scroll";
 import { useMotionValue } from 'framer-motion';
 import { motion } from "motion/react";
 import gsap from 'gsap';
@@ -30,13 +29,6 @@ function LandingPage() {
     }, []);
     const navigate = useNavigate();
     const stfm4 = useRef();
-
-    useEffect(() => {
-      const locomotiveScroll = new LocomotiveScroll();
-      return () => {
-        locomotiveScroll.destroy();
-      }
-    },[]);
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
