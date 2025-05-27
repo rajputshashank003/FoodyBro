@@ -8,6 +8,7 @@ import Search from '../../components/Search/Search';
 import Price from '../../components/Price/Price';
 import { toast } from 'react-toastify';
 import { getUser } from '../../Services/userService.js';
+import GetShortName from '../../components/GetShortName/GetShortName.jsx';
 
 export default function FoodsAdminPage() {
   const [foods, setFoods] = useState();
@@ -37,24 +38,6 @@ export default function FoodsAdminPage() {
     );
   };
 
-  const get_good_food_name = ( food_name ) => {
-    if( food_name.length <= 15) {
-      return <>{food_name}</>
-    }
-    return (
-      <>
-        {
-          food_name.split("").map((char, idx) => {
-            if ( idx > 15 ) {
-              return null;
-            } 
-            return <span key={idx} > {char} </span>
-          })
-        }
-        ...
-      </>
-    )
-  }
 
   const deleteFood = async food => {
     const confirmed = window.confirm(`Delete Food ${food.name}?`);
@@ -89,7 +72,9 @@ export default function FoodsAdminPage() {
                   <img src={food.imageUrl} className='h-[80px] hover:z-[99] hover:scale-[2.5] duration-300 object-cover w-[30%] rounded-[12px]' alt={food.name} />
                   <div className="flex flex-col sm:gap-2 w-[70%] relative ">
                     <div className='flex flex-row h-[35px] justify-between w-full  items-center'>
-                      <div className='gap-0 flex flex-row'>{ get_good_food_name(food.name) }</div>
+                      <div className='gap-0 flex flex-row'>
+                        <GetShortName food_name={food.name} />
+                      </div>
                       <Price price={food.price} />
                     </div>
                     <div className="links h-[35px] w-full flex flex-row gap-2 ">
