@@ -10,7 +10,7 @@ const Header_v2 = () => {
     const navigate = useNavigate();
     const { searchTerm } = useParams();
     const {cart} = useCart();
-    const [search_placeholder, set_search_placeholder] = useState('');
+    const [search_placeholder, set_search_placeholder] = useState('Ai Search...');
     const [fade_placeholder, set_fade_placeholder] = useState(true)
     const totalCount = cart.totalCount;
 

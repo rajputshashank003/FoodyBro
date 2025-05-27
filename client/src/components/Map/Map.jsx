@@ -11,9 +11,9 @@ import {
 import { toast } from 'react-toastify';
 import * as L from 'leaflet';
 
-export default function Map({ readonly, location, onChange }) {
+export default function Map({ width, readonly, location, onChange }) {
   return (
-    <div className={classes.container}>
+    <div className={classes.container + " " + width}>
       <MapContainer
         className={classes.map}
         center={[0, 0]}

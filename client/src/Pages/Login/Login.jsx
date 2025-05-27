@@ -114,7 +114,7 @@ export default function Login() {
                         duration: 0.3,
                         ease: 'linear'
                     }}
-                    type='submit' className='bg-[#D32F2F] text-white text-[25px] w-full rounded-[12px] max-sm:mt-0 mt-16 h-[46px]'>
+                    type='submit' className='bg-[#D32F2F] text-white text-[25px] w-full rounded-[12px] h-[46px]'>
                     Submit
                 </motion.button>
             </form>
