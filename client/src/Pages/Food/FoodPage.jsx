@@ -99,7 +99,7 @@ export default function FoodPage() {
   return (
     <>
     {food ? 
-      <div className={classes.box}>
+      <div className={classes.box + " px-4 "}>
         <div className={classes.main}>
           <img className={classes.img} src={food.imageUrl}/>
           <span className={classes.span}>
