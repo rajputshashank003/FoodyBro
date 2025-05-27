@@ -59,7 +59,6 @@ const update_catched_food_data = async () => {
 
 const update_catched_personalized_food_data = async (userId, allFoods) => {
   const recommendedItems = await getRecommendations(userId);
-  console.log(recommendedItems);
   
   if(!StoredFoodData) {
     await update_catched_food_data();
@@ -362,35 +361,42 @@ router.get('/recommendations/:userId', async (req, res) => {
 });
 
 router.get("/tags/getAll", handler (async (req, res) => {
-    const userId = req.query.id; 
-    const tags = await foodModel.aggregate([
-        {
-            $unwind : '$tags' ,
-        },
-        {
-            $group : {
-                _id : '$tags',
-                count : {$sum : 1} ,
-            },
-        },
-        {
-            $project : {
-                _id : 0,
-                name : "$_id",
-                count : "$count",
-            }
+    try {
+      const userId = req.query.id; 
+      const tags = await foodModel.aggregate([
+          {
+              $unwind : '$tags' ,
+          },
+          {
+              $group : {
+                  _id : '$tags',
+                  count : {$sum : 1} ,
+              },
+          },
+          {
+              $project : {
+                  _id : 0,
+                  name : "$_id",
+                  count : "$count",
+              }
+          }
+      ]);
+      
+      if(userId){
+        const foodIds = await userModel.findById({_id : userId});
+        if(!foodIds.favourite_food) {
+          return res.send(ans);
         }
-    ]).sort({count : -1 }); // -1 for descending and 1 is for ascending 
-    
-    if(userId){
-      const foodIds = await userModel.findById({_id : userId});
-      if(!foodIds.favourite_food) {
-        return res.send(ans);
+        tags.unshift({name : "favourites" , count : foodIds.favourite_food.length });
       }
-      tags.unshift({name : "favourites" , count : foodIds.favourite_food.length });
-    }
 
-    res.send(tags);
+      res.send(tags);
+    } catch (err ) {
+      res.status(404).json({
+        success: false,
+        message: err.message
+      })
+    }
 }));
 
 router.get("/tags/:tag",handler( async (req, res) => {
