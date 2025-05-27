@@ -5,16 +5,14 @@ const useDimensions = () => {
     const [height, setHeight] = useState(window.innerHeight);
     useEffect(() => {
         function reset() {
+          console.log('recetting');
           setHeight(window.innerHeight);
           setWidth(window.innerWidth);
         }
         window.addEventListener("resize", () => reset());
         return () => window.removeEventListener("resize" , () => reset());
     } ,[]);
-
-    useEffect(() => {
-      window.location.reload();
-    }, [width]);
+    
   return (
     {width , height}
   )
