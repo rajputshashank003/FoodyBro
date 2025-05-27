@@ -131,7 +131,7 @@ export default function HomePage() {
               {!searchTerm && !tag && 
                 <>
                   <div className="text text-[20px] text-neutral-600 font-semibold w-full justify-start mb-2">Recomended Foods</div>
-                  <div  className="two rounded-[12px] p-[11px] gap-[11px] sm:hidden grid bg-gray-300 grid-cols-2 h-fit w-full">
+                  <div  className="two max-w-[400px] rounded-[12px] p-[11px] gap-[11px] sm:hidden grid bg-gray-300 grid-cols-2 h-fit w-full">
                     <div onClick={() => navigate(`/food/${sample_foods[0].id}`)} className="left cursor-pointer relative col-span-1 flex flex-col gap-2">
                         <img src={sample_foods[2].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
                         <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[2].name}</div>

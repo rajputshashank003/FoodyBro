@@ -55,7 +55,7 @@ export default function Thumbnails_v2({food, load_next_5_foods, ind}) {
     return (
         <motion.div 
             onViewportEnter={() => { console.log("hello"); load_next_5_foods(ind) }}
-            className='w-full'
+            className='w-full max-w-[300px]'
         >
             <div className='w-full bg-neutral-200 h-[300px] p-[5px] rounded-[8px] gap-2 grid grid-rows-5' >
                 <div className=' relative row-span-3 w-full h-full'>
