@@ -14,7 +14,7 @@ import useDimensions from './components/Hooks/useDimensions.jsx';
 function App() {
   const {showLoading , hideLoading} = useLoading();
   useEffect ( () => {
-    setLoadingInterceptor({hideLoading, showLoading});
+    // setLoadingInterceptor({hideLoading, showLoading});
   }, []);
   const { width } = useDimensions();
   
