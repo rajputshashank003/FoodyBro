@@ -146,7 +146,7 @@ export default function HomePage() {
               <div className="text text-[20px] text-neutral-600 font-semibold w-full mb-2 mt-4 justify-start">All Foods</div>
               <div className={"flex flex-wrap justify-center gap-4 mb-4"}>
                 {
-                  sample_foods.slice((!searchTerm && !tag ) ? 2 : 0).map( (food, ind) => (
+                  sample_foods.map( (food, ind) => (
                     <Thumbnails_v2 ind={ind} load_next_5_foods={load_next_5_foods} key={food._id + "" + ind} food={food}/>
                   ))
                 }
