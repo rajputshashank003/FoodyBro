@@ -7,7 +7,7 @@ const useDimensions = () => {
         function reset() {
           setHeight(window.innerHeight);
           setWidth(window.innerWidth);
-          window.location.reload();
+          // window.location.reload();
         }
         window.addEventListener("resize", () => reset());
         return () => window.removeEventListener("resize" , () => reset());
