@@ -96,7 +96,7 @@ export default function PrimarySearchAppBar() {
   };
 
   useEffect(() => {
-    const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "Barish me kuch kahan hai","Street food"];
+    const values = ["AI Search...", "Delhi ka food", "Friend's birthday", "Barish me kuch khana hai","Street food"];
     let ind = 0;
     const interval = setInterval(() => {
       set_fade_placeholder(true); 

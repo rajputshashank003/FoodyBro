@@ -3,6 +3,7 @@ import classes from "./Login.module.css";
 import {Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from '../../components/Hooks/useAuth';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 export default function Login() {
     const {user, login} = useAuth();
@@ -105,9 +106,17 @@ export default function Login() {
                 <div className="forgot_pass text-[#D32F2F] cursor-pointer text-sm font-semibold w-full flex justify-end">
                     Forgot Password ?
                 </div>
-                <button type='submit' className='bg-[#D32F2F] hover:bg-[#D32F2F]/80 duration-200 text-white text-[25px] w-full rounded-[12px] max-sm:mt-0 mt-16 h-[46px]'>
+                <motion.button 
+                    whileTap={{
+                        scale: 0.8,
+                    }}
+                    transition={{
+                        duration: 0.3,
+                        ease: 'linear'
+                    }}
+                    type='submit' className='bg-[#D32F2F] text-white text-[25px] w-full rounded-[12px] max-sm:mt-0 mt-16 h-[46px]'>
                     Submit
-                </button>
+                </motion.button>
             </form>
             <div className={"absolute w-full flex justify-center bottom-0 max-sm:bottom-20 left-1/2 -translate-x-1/2 "}>
                 New user? &nbsp;

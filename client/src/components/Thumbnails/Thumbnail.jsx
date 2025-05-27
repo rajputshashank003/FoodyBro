@@ -22,7 +22,7 @@ import { addToFavourites, isFavourite, removeFromFavourites, saveSearchTerm ,rem
 import { toast } from 'react-toastify';
 import { motion } from "framer-motion";
 
-export default function MediaCard({food, load_next_6_foods, ind}) {
+export default function MediaCard({food, load_next_5_foods, ind}) {
     const defaultImage = "/foods/";
     const {addToCart } = useCart();
     const handleAddToCart = () => {
@@ -62,13 +62,13 @@ export default function MediaCard({food, load_next_6_foods, ind}) {
     
   return (
     <motion.div 
-      onViewportEnter={() => load_next_6_foods(ind) }
+      onViewportEnter={() => load_next_5_foods(ind) }
       className={classes.main} 
     >
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ minWidth: 300, width: '100%' }}>
       <Link to={`/food/${food.id}`} style={{textDecoration:"none", }}>
       <CardMedia
-        sx={{ height: 300 , width : 380}}
+        sx={{ height: 300 , width : '100%'}}
         image={food.imageUrl}
         title={food.name}
       />
