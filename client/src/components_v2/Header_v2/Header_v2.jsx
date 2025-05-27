@@ -38,7 +38,7 @@ const Header_v2 = () => {
     
 
     return (
-        <div className='relative mx-4 grid grid-cols-5 h-[45px] gap-2 mb-4 '>
+        <div className='z-[99999] backdrop-blur-[10px] px-4 grid grid-cols-5 h-[45px] gap-2 '>
             <input 
                 placeholder={search_placeholder}
                 style={{ placeContent : fade_placeholder && term?.length == 0 ? 0 : 1}}

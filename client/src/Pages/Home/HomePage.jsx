@@ -84,7 +84,7 @@ export default function HomePage() {
     <div className='px-4'>
         {
           sample_tags && sample_tags.length > 0 &&
-          <div className={classes.tags}>
+          <div className={classes.tags + " pt-4"}>
             {/* <Tags tags={sample_tags}/> */}
             <Tags_v2 tags={sample_tags} />
           </div>
@@ -128,19 +128,19 @@ export default function HomePage() {
             </div>  
             :
             <div className='flex flex-col min-h-screen justify-start items-center my-4'>
-              {!searchTerm && !tag && 
+              {!searchTerm && !tag && sample_foods[2] && sample_foods[3] &&
                 <>
                   <div className="text text-[20px] text-neutral-600 font-semibold w-full justify-start mb-2">Recomended Foods</div>
                   <div  className="two max-w-[400px] rounded-[12px] p-[11px] gap-[11px] sm:hidden grid bg-gray-300 grid-cols-2 h-fit w-full">
-                    <div onClick={() => navigate(`/food/${sample_foods[0].id}`)} className="left cursor-pointer relative col-span-1 flex flex-col gap-2">
-                        <img src={sample_foods[2].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
-                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[2].name}</div>
-                        <div className="time text-[15px] text-neutral-600">{sample_foods[2].cookTime} min</div>
+                    <div onClick={() => navigate(`/food/${sample_foods[2]?.id}`)} className="left cursor-pointer relative col-span-1 flex flex-col gap-2">
+                        <img src={sample_foods[2]?.imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
+                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[2]?.name}</div>
+                        <div className="time text-[15px] text-neutral-600">{sample_foods[2]?.cookTime} min</div>
                     </div>
-                    <div onClick={() => navigate(`/food/${sample_foods[1].id}`)} className="left cursor-pointer col-span-1 flex flex-col gap-2">
-                        <img src={sample_foods[3].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
-                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[3].name}</div>
-                        <div className="time text-[15px] text-neutral-600">{sample_foods[3].cookTime} min</div>
+                    <div onClick={() => navigate(`/food/${sample_foods[2]?.id}`)} className="left cursor-pointer col-span-1 flex flex-col gap-2">
+                        <img src={sample_foods[3]?.imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
+                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[3]?.name}</div>
+                        <div className="time text-[15px] text-neutral-600">{sample_foods[3]?.cookTime} min</div>
                     </div>
                   </div>
                 </>
