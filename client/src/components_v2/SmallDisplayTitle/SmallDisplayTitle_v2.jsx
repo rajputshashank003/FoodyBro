@@ -4,16 +4,18 @@ import { theme_color } from '../../constants/constants'
 import { useAuth } from '../../components/Hooks/useAuth'
 import Menu_v2 from '../../components/Header/Menu_v2'
 import { useCart } from '../../components/Hooks/useCart'
+import { useNavigate } from 'react-router-dom'
 
 const SmallDisplayTitle_v2 = () => {
     const { user } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
     const { cart } = useCart();
+    const navigate = useNavigate();
     
     return (
         <div className="w-full relative px-4 flex flex-col pt-4">
         <div className={"line-1 flex flex-row justify-between items-center w-full " }>
-            <div style={{ color: theme_color}} className="home font-bold text-[40px] max-sm:text-[35px]">
+            <div onClick={() => navigate("/")} style={{ color: theme_color}} className="home cursor-pointer font-bold text-[40px] max-sm:text-[35px]">
                 FoodyBro
             </div>
             <motion.div
@@ -28,7 +30,7 @@ const SmallDisplayTitle_v2 = () => {
                     ease: 'linear'
                 }}
                 style={{ backgroundColor : theme_color}}
-                onClick={() => setMenuOpen(prev => !prev)} className="profile z-[999999] cursor-pointer rounded-full text-white flex justify-center items-center w-[50px] h-[50px]"
+                onClick={() => setMenuOpen(prev => !prev)} className="profile z-[99999] cursor-pointer rounded-full text-white flex justify-center items-center w-[50px] h-[50px]"
             >
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="35"  height="35"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-circle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" /></svg>
             </motion.div>

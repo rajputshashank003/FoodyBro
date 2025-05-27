@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion } from "motion/react";
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
@@ -10,7 +10,7 @@ gsap.registerPlugin(useGSAP);
 const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
     const navigate = useNavigate();
     const { user } = useAuth();
-
+    const isFirstRender = useRef(true);
     const menu_options = 
         user && user.name ?
         [
@@ -107,6 +107,12 @@ const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
         })
     }
     const handleMenuClose = () => {
+
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         const gtl = gsap.timeline();
         gtl.fromTo(".menu_par", {
             height: user && user.name ? '318px' : '110px',
@@ -138,8 +144,8 @@ const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
 
     return (
         <>
-        <div onClick={() => setMenuOpen(false)} className="h-screen opacity-0 menu_screen w-screen z-[999] bg-black/20 backdrop-blur-[7px] fixed top-0 right-0"></div>
-            <div className=' menu_par overflow-hidden shadow-[0px_4px_12px] shadow-gray-700 flex flex-col w-[230px] bg-white z-[9999] backdrop-blur-[5px] text-zinc-900 absolute top-[10px] right-[70px] rounded-[12px] border-[1.5px] border-black'>
+        <div onClick={() => setMenuOpen(false)} className="h-screen hidden opacity-0 menu_screen w-screen z-[999] bg-black/20 backdrop-blur-[7px] fixed top-0 right-0"></div>
+            <div className=' menu_par h-[0px] opacity-0 overflow-hidden shadow-[0px_4px_12px] shadow-gray-700 flex flex-col w-[230px] bg-white z-[9999] backdrop-blur-[5px] text-zinc-900 absolute top-[10px] right-[70px] rounded-[12px] border-[1.5px] border-black'>
             {
                 user && user.name && user.email && 
                 <motion.div 
