@@ -13,7 +13,7 @@ import "./components/Interceptors/AuthInterceptor.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <div className=' min-h-svh pb-2 w-screen bg-gradient-to-tr from-[#eda6a6] via-white'>
+    <div className=' min-h-svh pb-2 w-screen bg-neutral-50'>
     <BrowserRouter >
       <LoadingProvider>
         <AuthProvider>
