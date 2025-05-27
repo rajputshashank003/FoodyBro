@@ -19,6 +19,7 @@ const Header_v2 = () => {
     }, [searchTerm]);
     
     const search = async () => {
+        setTerm('');
         term ? navigate("/search/" + term) : navigate("/");
     };
 

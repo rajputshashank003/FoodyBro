@@ -19,6 +19,9 @@ const ScrollTriggerFoods = ({stfm4}) => {
 
     const scrollTriggerFoodsRef = useRef();
     useEffect(() => {
+        if ( window.innerWidth < 600 ) {
+            return ;
+        }
         const fetchData = async () => {
             const userId = getUser() ? getUser().id : null ;
             const {data} = await getAll(userId); 
