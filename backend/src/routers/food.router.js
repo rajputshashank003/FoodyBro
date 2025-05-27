@@ -129,107 +129,142 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/favourites", handler (async (req, res) => {
-  const {userId , foodId} = req.query;
-  const user = await userModel.findById(userId);
-  let isFavourite = false;
-  if(user.favourite_food){
-    isFavourite = user.favourite_food.includes(foodId);
+  try {
+    const {userId , foodId} = req.query;
+    const user = await userModel.findById(userId);
+    let isFavourite = false;
+    if(user.favourite_food){
+      isFavourite = user.favourite_food.includes(foodId);
+    }
+    res.status(200).json({
+      success : true,
+      data : isFavourite
+    })
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
   }
-  res.status(200).json({
-    success : true,
-    data : isFavourite
-  })
 }));
 
 router.post("/favourites", handler (async (req, res) => {
-  const {userId , foodId} = req.body;
-  const foodProduct = await userModel.findByIdAndUpdate(
-    {_id : userId},
-    {
-      $push : {
-        favourite_food : foodId
-      }
-    },
-    {new : true}
-  );
-  res.status(200).json({
-    success : true,
-    data : foodProduct
-  })
+  try {
+    const {userId , foodId} = req.body;
+    const foodProduct = await userModel.findByIdAndUpdate(
+      {_id : userId},
+      {
+        $push : {
+          favourite_food : foodId
+        }
+      },
+      {new : true}
+    );
+    res.status(200).json({
+      success : true,
+      data : foodProduct
+    })
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.delete("/favourites", handler (async (req, res) => {
-  const {userId , foodId} = req.query;
-  const foodProduct = await userModel.findByIdAndUpdate(
-    {_id : userId},
-    {
-      $pull : {
-        favourite_food : foodId
-      }
-    },
-    {new : true}
-  );
-  res.status(200).json({
-    success : true,
-    data : foodProduct
-  })
+  try {
+    const {userId , foodId} = req.query;
+    const foodProduct = await userModel.findByIdAndUpdate(
+      {_id : userId},
+      {
+        $pull : {
+          favourite_food : foodId
+        }
+      },
+      {new : true}
+    );
+    res.status(200).json({
+      success : true,
+      data : foodProduct
+    })
 
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.post("/review", handler (async (req, res) => {
-  const {id , comment , rating, email, name} = req.body;
-  const foodProduct = await foodModel.findByIdAndUpdate(
-    {_id : id},
-    {
-      $push : {
-        reviews : {comment , rating, email, name}
-      }
-    },
-    {new : true}
-  );
-  const updatedFood = await foodModel.findByIdAndUpdate(
-    {_id : id},
-    {
-      $set : {
-        rating : foodProduct.averageRating
-      }
-    },
-    {new : true}
-  );
-  await update_catched_food_data();
-  res.status(200).json({
-    success : true,
-    message : "Upload Success",
-    data : updatedFood
-  })
+  try {
+    const {id , comment , rating, email, name} = req.body;
+    const foodProduct = await foodModel.findByIdAndUpdate(
+      {_id : id},
+      {
+        $push : {
+          reviews : {comment , rating, email, name}
+        }
+      },
+      {new : true}
+    );
+    const updatedFood = await foodModel.findByIdAndUpdate(
+      {_id : id},
+      {
+        $set : {
+          rating : foodProduct.averageRating
+        }
+      },
+      {new : true}
+    );
+    await update_catched_food_data();
+    res.status(200).json({
+      success : true,
+      message : "Upload Success",
+      data : updatedFood
+    })
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.delete("/review", handler (async (req, res) => {
-  const {reviewId , foodId} = req.query;
-  const foodProduct = await foodModel.findByIdAndUpdate(
-    {_id : foodId}, 
-    {
-      $pull : {
-        reviews : {_id : reviewId}
-      }
-    },
-    {new : true}
-  );
-  const updatedFood = await foodModel.findByIdAndUpdate(
-    {_id : foodId},
-    {
-      $set : {
-        rating : foodProduct.averageRating
-      }
-    },
-    {new : true}
-  );
-  await update_catched_food_data();
-  res.status(200).json({
-    success : true,
-    message : "Data fetched success",
-    data : updatedFood
-  });
+  try {
+    const {reviewId , foodId} = req.query;
+    const foodProduct = await foodModel.findByIdAndUpdate(
+      {_id : foodId}, 
+      {
+        $pull : {
+          reviews : {_id : reviewId}
+        }
+      },
+      {new : true}
+    );
+    const updatedFood = await foodModel.findByIdAndUpdate(
+      {_id : foodId},
+      {
+        $set : {
+          rating : foodProduct.averageRating
+        }
+      },
+      {new : true}
+    );
+    await update_catched_food_data();
+    res.status(200).json({
+      success : true,
+      message : "Data fetched success",
+      data : updatedFood
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 
@@ -297,14 +332,20 @@ router.delete('/:foodId',
 );
 
 router.get("/search/:searchTerm", handler ( async (req,res) => {
+  try {
     const searchTerm = req.params.searchTerm;
     const searchRegex = new RegExp(searchTerm , 'i');
     const foods = await foodModel.find({name : {$regex : searchRegex }});
     res.send(foods);
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.post('/saveSearch', async (req, res) => {
-  console.log("save Seach called");
   const { id, term } = req.body;
   const newSearch = new SearchHistory({ userId: id, searchTerm: term });
   try {
@@ -400,22 +441,43 @@ router.get("/tags/getAll", handler (async (req, res) => {
 }));
 
 router.get("/tags/:tag",handler( async (req, res) => {
+  try {
     const {tag} = req.params;
     const foods = await foodModel.find({tags : tag});
     res.send(foods);
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.get("/tags/favourites/:userId", handler (async (req, res) => {
-  const {userId} = req.params;
-  const foodIds = (await userModel.findById({_id : userId})).favourite_food;
-  const foods = await foodModel.find({ _id: { $in: foodIds } });
-  res.send(foods);
+  try {
+    const {userId} = req.params;
+    const foodIds = (await userModel.findById({_id : userId})).favourite_food;
+    const foods = await foodModel.find({ _id: { $in: foodIds } });
+    res.send(foods);
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 router.get("/:id",handler( async (req, res) => {
+  try {
     const {id} = req.params;
     const food = await foodModel.findById(id);
     res.send(food);
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: err.message
+    })
+  }
 }));
 
 
