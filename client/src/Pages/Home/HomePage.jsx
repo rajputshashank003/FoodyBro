@@ -48,7 +48,7 @@ export default function HomePage() {
         } else if (searchTerm) {
           responseFood = await searchFood(searchTerm);
           if ( user && user?.id ) {
-            await saveSearchTerm( user.id , searchTerm );
+            await saveSearchTerm( user?.id , searchTerm );
           }
         } else {
           responseFood = await getAll(userId);
@@ -132,23 +132,23 @@ export default function HomePage() {
                 <>
                   <div className="text text-[20px] text-neutral-600 font-semibold w-full justify-start mb-2">Recomended Foods</div>
                   <div  className="two rounded-[12px] p-[11px] gap-[11px] sm:hidden grid bg-gray-300 grid-cols-2 h-fit w-full">
-                    <div onClick={() => navigate(`/food/${sample_foods[0].id}`)} className="left cursor-pointer relative col-span-1 flex flex-col gap-2">
-                        <img src={sample_foods[2].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
-                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[2].name}</div>
-                        <div className="time text-[15px] text-neutral-600">{sample_foods[2].cookTime} min</div>
+                    <div onClick={() => navigate(`/food/${sample_foods[0].id}`)} className="left relative col-span-1 flex flex-col gap-2">
+                        <img src={sample_foods[0].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
+                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[0].name}</div>
+                        <div className="time text-[15px] text-neutral-600">{sample_foods[0].cookTime} min</div>
                     </div>
-                    <div onClick={() => navigate(`/food/${sample_foods[1].id}`)} className="left cursor-pointer col-span-1 flex flex-col gap-2">
-                        <img src={sample_foods[3].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
-                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[3].name}</div>
-                        <div className="time text-[15px] text-neutral-600">{sample_foods[3].cookTime} min</div>
+                    <div onClick={() => navigate(`/food/${sample_foods[1].id}`)} className="left col-span-1 flex flex-col gap-2">
+                        <img src={sample_foods[1].imageUrl} className="img h-[120px] rounded-[8px]  w-full bg-gray-500"/>
+                        <div className="name text-[25px] font-semibold leading-[25px]">{sample_foods[1].name}</div>
+                        <div className="time text-[15px] text-neutral-600">{sample_foods[1].cookTime} min</div>
                     </div>
                   </div>
                 </>
               }
               <div className="text text-[20px] text-neutral-600 font-semibold w-full mb-2 mt-4 justify-start">All Foods</div>
-              <div className={"flex w-full flex-wrap justify-center gap-4 mb-4"}>
+              <div className={"flex flex-wrap justify-center gap-4 mb-4"}>
                 {
-                  sample_foods.map( (food, ind) => (
+                  sample_foods.slice((!searchTerm && !tag ) ? 2 : 0).map( (food, ind) => (
                     <Thumbnails_v2 ind={ind} load_next_5_foods={load_next_5_foods} key={food._id + "" + ind} food={food}/>
                   ))
                 }
