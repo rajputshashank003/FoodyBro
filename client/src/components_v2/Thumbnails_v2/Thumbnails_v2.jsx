@@ -13,12 +13,28 @@ import { motion } from "framer-motion";
 import Price from '../../components/Price/Price.jsx';
 import { useCart } from '../../components/Hooks/useCart.jsx';
 import { theme_color } from '../../constants/constants.js';
+import Counter from '../../components/Counter/Counter.jsx';
 
 export default function Thumbnails_v2({food, load_next_5_foods, ind}) {
-    const {addToCart } = useCart();
+    const { addToCart, cart } = useCart();
+    const [quantity, set_quantity] = useState(0);
+
     const handleAddToCart = () => {
         addToCart(food);
+        set_quantity(1);
         toast.success("Added to cart!");
+    }
+
+    const find_quantity = () => {
+        const result = cart.items.filter((f) => {
+            if (f.food.id === food.id) {
+                return true;
+            }
+            return false;
+        });
+        if ( result[0]?.quantity ) {
+            set_quantity(result[0]?.quantity);
+        }
     }
 
     const [favoriteFood , setFavouriteFood] = useState(false);
@@ -33,6 +49,7 @@ export default function Thumbnails_v2({food, load_next_5_foods, ind}) {
         if(userService.getUser()){
             check();
         }
+        find_quantity();
     },[]);
     const navigate = useNavigate();
     const handleFavouriteFood = async () => {
@@ -83,22 +100,31 @@ export default function Thumbnails_v2({food, load_next_5_foods, ind}) {
                         </Typography>
                     </div>
                     <div className='row-span-1 flex flex-row justify-between items-center h-full'>
-                        <Typography gutterBottom variant="h6" component="span">
-                            <Price price={food.price}/>
-                        </Typography>
-                        <motion.button
-                            whileTap={{
-                                scale: 0.75
-                            }}
-                            transition={{
-                                duration: 0.2,
-                                ease: 'linear'
-                            }}
-                            onClick={handleAddToCart}
-                            className={`bg-[${theme_color}] relative w-[40%] h-[70%] flex justify-center items-center text-white rounded-[8px]`} 
-                        >
-                            <AddShoppingCartIcon />
-                        </motion.button>
+                        <div className="">
+                            <Typography gutterBottom variant="h6" component="span">
+                                <Price price={food.price}/>
+                            </Typography>
+                        </div>
+                        {
+                            quantity == 0 ?
+                            <motion.button
+                                whileTap={{
+                                    scale: 0.75
+                                }}
+                                transition={{
+                                    duration: 0.2,
+                                    ease: 'linear'
+                                }}
+                                onClick={handleAddToCart}
+                                className={`bg-[${theme_color}] relative w-[40%] h-[70%] flex justify-center items-center text-white rounded-[8px]`} 
+                            >
+                                <AddShoppingCartIcon />
+                            </motion.button>
+                            :
+                            <div className="w-[50%] h-[70%] ">
+                                <Counter curr={quantity} setCurr={set_quantity} foodId={food.id} min={0} />
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
