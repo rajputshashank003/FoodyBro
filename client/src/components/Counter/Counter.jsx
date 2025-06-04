@@ -134,7 +134,6 @@ const Counter = ( props ) => {
     }
 
     useEffect(() => {
-        console.log(curr);
         if ( curr <= 9 ) {
             setOne(undefined);
             setTwo(curr);

@@ -55,7 +55,20 @@ const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
                 type: 'navigate',
                 link: '/login',
                 label: () => 'Login'
-            } 
+            },
+            {
+                type: 'navigate',
+                link: '/cart',
+                label:  () => { 
+                        return ( 
+                            <div className='flex flex-row gap-2 justify-start items-center text-start' >
+                                <div className='h-[25px] text-[14px] font-bold flex justify-center items-center text-white bg-[#D32F2F] rounded-full w-[25px] '>
+                                    {totalCount ? totalCount : 0}
+                                </div>
+                                <span>Cart</span>
+                            </div>
+                        )}
+            }
         ]
     const menu_options_2 = [ 
         {
@@ -99,7 +112,7 @@ const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
             height: 0,
             opacity: 0,
         }, {
-            height: user && user.name ? '318px' : '110px',
+            height: user && user.name ? '318px' : '155px',
             opacity: 1,
         }, {
             duration: 2,
@@ -115,7 +128,7 @@ const Menu_v2 = ({ totalCount, menuOpen, setMenuOpen}) => {
 
         const gtl = gsap.timeline();
         gtl.fromTo(".menu_par", {
-            height: user && user.name ? '318px' : '110px',
+            height: user && user.name ? '318px' : '155px',
             opacity: 1,
         }, {
             height: 0,
