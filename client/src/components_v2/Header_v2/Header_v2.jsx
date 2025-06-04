@@ -20,7 +20,7 @@ const Header_v2 = () => {
     
     const search = async () => {
         setTerm('');
-        term ? navigate("/search/" + term) : navigate("/");
+        term && term.length > 0 ? navigate("/search/" + term) : navigate("/home");
     };
 
     useEffect(() => {
