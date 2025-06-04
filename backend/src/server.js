@@ -19,7 +19,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(express.json());
-app.use(cors({credentials: true , origin: ['https://foodybro1.onrender.com', 'https://foodybro.vercel.app', 'https://1at.vercel.app', 'https://khao.vercel.app', 'https://zomaato.vercel.app', ...( process.env.MODE === 'development' ? ['http://localhost:8000'] : [] )]}));
+// app.use(cors({credentials: true , origin: ['https://foodybro1.onrender.com', 'https://foodybro.vercel.app', 'https://1at.vercel.app', 'https://khao.vercel.app', 'https://zomaato.vercel.app', ...( process.env.MODE === 'development' ? ['http://localhost:8000'] : [] )]}));
+app.use(cors({origin: '*'}));
 
 app.get("/api/check", (req, res) => {
     return res.json({
